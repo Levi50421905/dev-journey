@@ -1,0 +1,519 @@
+/*
+  ╔══════════════════════════════════════════════════════╗
+  ║  File   : style.css                                 ║
+  ║  Topik  : CSS Grid — Layout 2 Dimensi               ║
+  ║  Folder : web/04-grid/                              ║
+  ║  Author : Muhammad Alfarezzi Fallevi (50421905)     ║
+  ╚══════════════════════════════════════════════════════╝
+*/
+
+:root {
+  --biru:       #2563eb;
+  --biru-gelap: #1e40af;
+  --biru-muda:  #dbeafe;
+  --biru-bg:    #eff6ff;
+  --hijau:      #16a34a;
+  --hijau-bg:   #dcfce7;
+  --orange:     #ea580c;
+  --orange-bg:  #ffedd5;
+  --ungu:       #7c3aed;
+  --ungu-bg:    #ede9fe;
+  --teks:       #111827;
+  --teks-abu:   #6b7280;
+  --bg:         #f8fafc;
+  --putih:      #ffffff;
+  --border:     #e5e7eb;
+  --font:       'Segoe UI', system-ui, sans-serif;
+  --font-mono:  'Courier New', monospace;
+  --radius:     10px;
+  --radius-sm:  6px;
+  --shadow:     0 1px 6px rgba(0,0,0,0.08);
+  --transisi:   0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--teks);
+  background: var(--bg);
+}
+
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.3; color: var(--teks); }
+h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); }
+h2 { font-size: 1.45rem; margin-bottom: 1.25rem; }
+h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+p  { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: #f1f5f9;
+  color: #e11d48;
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+}
+
+pre {
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1.25rem;
+  border-radius: var(--radius-sm);
+  overflow-x: auto;
+  line-height: 1.8;
+}
+
+a { color: var(--biru); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ════════════ HEADER ════════════ */
+header {
+  background: var(--biru);
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo { font-weight: 700; font-size: 1.1rem; color: white; }
+
+nav ul { list-style: none; display: flex; gap: 0.25rem; }
+nav a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: background var(--transisi);
+}
+nav a:hover { background: rgba(255,255,255,0.15); color: white; text-decoration: none; }
+
+/* ════════════ MAIN ════════════ */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--biru) 0%, var(--biru-gelap) 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: var(--radius);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.hero h1 { color: white; margin-bottom: 0.75rem; }
+.hero p { opacity: 0.9; font-size: 1.05rem; }
+
+.section { margin-bottom: 3rem; }
+.section > h2 {
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1.5rem;
+  color: var(--biru-gelap);
+}
+
+.card {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.note { font-size: 0.85rem; color: var(--teks-abu); margin-top: 0.4rem; }
+.demo-label { font-size: 0.88rem; font-weight: 600; color: var(--teks); margin-bottom: 0.5rem; }
+.demo-block { margin-bottom: 1.5rem; }
+.demo-block:last-child { margin-bottom: 0; }
+
+.tip-box {
+  background: #fefce8;
+  border: 1px solid #fde047;
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+.code-preview {
+  margin: 1rem 0;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+/* ════════════ GRID ITEM (KOTAK DEMO) ════════════ */
+.gbox {
+  background: var(--biru);
+  color: white;
+  padding: 0.7rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+/* ════════════ GRID CONTAINERS (DEMO) ════════════ */
+.grid-demo {
+  display: grid;
+  gap: 8px;
+  margin-top: 0.5rem;
+}
+
+.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.explicit-rows { grid-template-rows: 80px 120px; }
+
+/* ════════════ SECTION 1: KONSEP ════════════ */
+.konsep-visual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.25rem 0;
+  align-items: start;
+}
+
+.konsep-grid-demo {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+
+.konsep-box {
+  background: var(--biru);
+  color: white;
+  padding: 1.5rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.terminology {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.term-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.term-item {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.term-name {
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--biru-gelap);
+}
+
+.term-desc {
+  font-size: 0.82rem;
+  color: var(--teks-abu);
+}
+
+/* ════════════ SECTION 2: COLUMNS ════════════ */
+.col-demos {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+/* ════════════ SECTION 3: ROWS & GAP ════════════ */
+.gap-demos {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.25rem;
+  margin-top: 0.75rem;
+}
+
+/* Span demo */
+.span-demo {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.span-col {
+  grid-column: 1 / 3; /* dari line 1 sampai line 3 = 2 kolom */
+  background: var(--orange);
+}
+
+.span-row {
+  grid-row: 2 / 4;    /* dari row line 2 sampai line 4 = 2 baris */
+  background: var(--hijau);
+}
+
+/* ════════════ SECTION 4: AREAS ════════════ */
+.areas-demo {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  grid-template-rows: 50px 1fr 40px;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  gap: 8px;
+  height: 220px;
+  margin: 1.25rem 0;
+}
+
+.area-header  { grid-area: header;  background: var(--biru); color: white; }
+.area-sidebar { grid-area: sidebar; background: #1e293b; color: rgba(255,255,255,0.8); }
+.area-main    { grid-area: main;    background: var(--biru-bg); color: var(--biru-gelap); }
+.area-footer  { grid-area: footer;  background: #374151; color: rgba(255,255,255,0.7); }
+
+.area-header, .area-sidebar, .area-main, .area-footer {
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ════════════ SECTION 5: AUTO-FIT ════════════ */
+.grid-autofit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  /*
+    auto-fit  → buat kolom sebanyak mungkin yang muat
+    minmax()  → minimal 150px, maksimal 1fr (sama rata)
+    Hasil: responsif otomatis TANPA media query!
+  */
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.gbox-card {
+  background: var(--biru);
+  color: white;
+  padding: 1.25rem;
+  border-radius: var(--radius-sm);
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: transform var(--transisi), box-shadow var(--transisi);
+}
+
+.gbox-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(37,99,235,0.25);
+}
+
+/* ════════════ USE CASE 1: PAGE LAYOUT ════════════ */
+.page-layout-demo {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  grid-template-rows: 50px 1fr 40px;
+  grid-template-areas:
+    "header  header"
+    "sidebar main"
+    "footer  footer";
+  gap: 8px;
+  height: 240px;
+  margin-top: 1rem;
+}
+
+.pl-header {
+  grid-area: header;
+  background: var(--biru);
+  color: white;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.pl-sidebar {
+  grid-area: sidebar;
+  background: #1e293b;
+  color: rgba(255,255,255,0.85);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  font-size: 0.85rem;
+}
+
+.pl-sidebar ul {
+  list-style: none;
+  margin-top: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.pl-sidebar li {
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.08);
+  font-size: 0.82rem;
+}
+
+.pl-main {
+  grid-area: main;
+  background: var(--biru-bg);
+  color: var(--biru-gelap);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  font-size: 0.88rem;
+}
+
+.pl-footer {
+  grid-area: footer;
+  background: #374151;
+  color: rgba(255,255,255,0.7);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+/* ════════════ USE CASE 2: GALLERY ════════════ */
+.gallery-demo {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 80px;
+  gap: 8px;
+  margin-top: 1rem;
+}
+
+.gallery-item {
+  background: var(--biru-muda);
+  color: var(--biru-gelap);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.88rem;
+}
+
+.gallery-item.featured {
+  grid-column: span 2; /* 2 kolom */
+  grid-row: span 2;    /* 2 baris */
+  background: var(--biru);
+  color: white;
+  font-size: 1rem;
+}
+
+.gallery-item.tall {
+  grid-row: span 2; /* 2 baris */
+  background: var(--ungu-bg);
+  color: var(--ungu);
+}
+
+/* ════════════ USE CASE 3: DASHBOARD ════════════ */
+.dashboard-demo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.dash-card {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: var(--shadow);
+  transition: box-shadow var(--transisi), transform var(--transisi);
+}
+
+.dash-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}
+
+.dash-icon { font-size: 2rem; }
+
+.dash-label {
+  font-size: 0.82rem;
+  color: var(--teks-abu);
+  margin-bottom: 0.25rem;
+}
+
+.dash-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--teks);
+  margin: 0;
+}
+
+/* ════════════ FOOTER ════════════ */
+footer {
+  background: var(--teks);
+  color: rgba(255,255,255,0.75);
+  padding: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+footer p { margin-bottom: 0.3rem; }
+footer p:last-child { margin-bottom: 0; }
+footer strong { color: white; }
+footer a { color: #93c5fd; }
+
+/* ════════════ RESPONSIVE ════════════ */
+@media (max-width: 1024px) {
+  .konsep-visual { grid-template-columns: 1fr; }
+  .term-grid { grid-template-columns: 1fr 1fr; }
+  .gap-demos { grid-template-columns: 1fr; }
+  .gallery-demo { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 768px) {
+  header { padding: 0 1rem; }
+  .header-inner { height: auto; flex-direction: column; padding: 0.75rem 0; gap: 0.5rem; }
+  nav ul { flex-wrap: wrap; justify-content: center; }
+  nav a { font-size: 0.8rem; padding: 0.3rem 0.5rem; }
+  main { padding: 1.25rem 1rem; }
+  .hero { padding: 2rem 1.25rem; }
+  .term-grid { grid-template-columns: 1fr; }
+  .gallery-demo { grid-template-columns: repeat(2, 1fr); }
+  .areas-demo,
+  .page-layout-demo {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "header"
+      "sidebar"
+      "main"
+      "footer";
+    height: auto;
+  }
+}

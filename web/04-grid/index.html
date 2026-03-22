@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  File   : index.html                                ║
+  ║  Topik  : CSS Grid — Layout 2 Dimensi               ║
+  ║  Folder : web/04-grid/                              ║
+  ║  Author : Muhammad Alfarezzi Fallevi (50421905)     ║
+  ║  Repo   : github.com/Levi50421905/dev-journey       ║
+  ╚══════════════════════════════════════════════════════╝
+
+  CSS Grid = sistem layout 2 dimensi (baris DAN kolom sekaligus)
+  Berbeda dengan Flexbox yang hanya 1 dimensi (baris OR kolom).
+
+  Kapan pakai Grid vs Flexbox?
+  → Grid   : layout halaman, dashboard, galeri — struktur 2D
+  → Flexbox: navbar, komponen kecil, centering — aliran 1D
+-->
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>04 — CSS Grid</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <span class="logo">🗂️ CSS Grid</span>
+      <nav>
+        <ul>
+          <li><a href="#konsep">Konsep</a></li>
+          <li><a href="#columns">Columns</a></li>
+          <li><a href="#rows">Rows</a></li>
+          <li><a href="#areas">Areas</a></li>
+          <li><a href="#autofit">Auto-fit</a></li>
+          <li><a href="#usecase">Use Case</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>CSS Grid</h1>
+      <p>Layout 2 dimensi — atur baris DAN kolom sekaligus</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 1: KONSEP DASAR
+    ════════════════════════════════════════════ -->
+    <section id="konsep" class="section">
+      <h2>1. Konsep Dasar</h2>
+
+      <div class="card">
+        <p>
+          Grid bekerja dengan mendefinisikan <strong>kolom dan baris</strong>
+          pada container, lalu item ditempatkan di dalamnya secara otomatis
+          atau manual.
+        </p>
+
+        <div class="konsep-visual">
+          <!--
+            Terminologi Grid:
+            Grid Container  → elemen dengan display: grid
+            Grid Items      → anak langsung container
+            Grid Lines      → garis pembatas kolom & baris (nomor dari 1)
+            Grid Track      → ruang antara dua grid lines (kolom atau baris)
+            Grid Cell       → satu kotak di grid (1 kolom × 1 baris)
+            Grid Area       → sekumpulan sel yang digabung
+          -->
+          <div class="konsep-grid-demo">
+            <div class="konsep-box">1</div>
+            <div class="konsep-box">2</div>
+            <div class="konsep-box">3</div>
+            <div class="konsep-box">4</div>
+            <div class="konsep-box">5</div>
+            <div class="konsep-box">6</div>
+          </div>
+          <div class="konsep-labels">
+            <p>
+              <code>display: grid</code><br>
+              <code>grid-template-columns: 1fr 1fr 1fr</code><br>
+              <code>gap: 8px</code>
+            </p>
+            <p class="note">
+              3 kolom, 2 baris — item ditempatkan otomatis dari kiri ke kanan, atas ke bawah.
+            </p>
+          </div>
+        </div>
+
+        <!-- Terminologi -->
+        <div class="terminology">
+          <h3>Istilah Penting</h3>
+          <div class="term-grid">
+            <div class="term-item">
+              <span class="term-name">Grid Container</span>
+              <span class="term-desc">Elemen dengan <code>display: grid</code></span>
+            </div>
+            <div class="term-item">
+              <span class="term-name">Grid Items</span>
+              <span class="term-desc">Anak langsung container</span>
+            </div>
+            <div class="term-item">
+              <span class="term-name">Grid Lines</span>
+              <span class="term-desc">Garis pembatas — nomor dari 1</span>
+            </div>
+            <div class="term-item">
+              <span class="term-name">Grid Track</span>
+              <span class="term-desc">Satu baris atau kolom</span>
+            </div>
+            <div class="term-item">
+              <span class="term-name">Grid Cell</span>
+              <span class="term-desc">Satu kotak (1 kolom × 1 baris)</span>
+            </div>
+            <div class="term-item">
+              <span class="term-name">Grid Area</span>
+              <span class="term-desc">Beberapa sel yang digabung</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 2: GRID-TEMPLATE-COLUMNS
+    ════════════════════════════════════════════ -->
+    <section id="columns" class="section">
+      <h2>2. grid-template-columns — Mendefinisikan Kolom</h2>
+
+      <div class="card">
+        <p>
+          Menentukan jumlah dan lebar kolom.
+          Satuan <code>fr</code> (fraction) = bagian proporsional dari ruang yang tersedia.
+        </p>
+
+        <div class="col-demos">
+
+          <div class="demo-block">
+            <p class="demo-label"><code>grid-template-columns: 1fr 1fr 1fr</code></p>
+            <div class="grid-demo cols-3">
+              <div class="gbox">A</div><div class="gbox">B</div><div class="gbox">C</div>
+              <div class="gbox">D</div><div class="gbox">E</div><div class="gbox">F</div>
+            </div>
+            <p class="note">3 kolom lebar sama rata</p>
+          </div>
+
+          <div class="demo-block">
+            <p class="demo-label"><code>grid-template-columns: 1fr 2fr 1fr</code></p>
+            <div class="grid-demo" style="grid-template-columns: 1fr 2fr 1fr;">
+              <div class="gbox">A</div><div class="gbox">B (2×)</div><div class="gbox">C</div>
+              <div class="gbox">D</div><div class="gbox">E (2×)</div><div class="gbox">F</div>
+            </div>
+            <p class="note">Kolom tengah 2× lebih lebar</p>
+          </div>
+
+          <div class="demo-block">
+            <p class="demo-label"><code>grid-template-columns: 200px 1fr</code></p>
+            <div class="grid-demo" style="grid-template-columns: 200px 1fr;">
+              <div class="gbox">200px</div><div class="gbox">sisa ruang (1fr)</div>
+              <div class="gbox">200px</div><div class="gbox">sisa ruang (1fr)</div>
+            </div>
+            <p class="note">Kolom pertama tetap 200px, kolom kedua mengambil sisa</p>
+          </div>
+
+          <div class="demo-block">
+            <p class="demo-label"><code>repeat(4, 1fr)</code></p>
+            <div class="grid-demo" style="grid-template-columns: repeat(4, 1fr);">
+              <div class="gbox">1</div><div class="gbox">2</div>
+              <div class="gbox">3</div><div class="gbox">4</div>
+            </div>
+            <p class="note"><code>repeat(n, ukuran)</code> — singkatan dari menuliskan n kali</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 3: ROWS & GAP
+    ════════════════════════════════════════════ -->
+    <section id="rows" class="section">
+      <h2>3. grid-template-rows & gap</h2>
+
+      <div class="card">
+
+        <div class="demo-block">
+          <h3>grid-template-rows</h3>
+          <p>Mendefinisikan tinggi setiap baris secara eksplisit.</p>
+          <p class="demo-label">
+            <code>grid-template-columns: 1fr 1fr 1fr</code><br>
+            <code>grid-template-rows: 80px 120px</code>
+          </p>
+          <div class="grid-demo cols-3 explicit-rows">
+            <div class="gbox">A (80px)</div>
+            <div class="gbox">B (80px)</div>
+            <div class="gbox">C (80px)</div>
+            <div class="gbox">D (120px)</div>
+            <div class="gbox">E (120px)</div>
+            <div class="gbox">F (120px)</div>
+          </div>
+        </div>
+
+        <div class="demo-block" style="margin-top: 1.5rem;">
+          <h3>gap — Jarak antar Sel</h3>
+          <div class="gap-demos">
+            <div>
+              <p class="demo-label"><code>gap: 0</code></p>
+              <div class="grid-demo cols-3" style="gap: 0;">
+                <div class="gbox">A</div><div class="gbox">B</div><div class="gbox">C</div>
+                <div class="gbox">D</div><div class="gbox">E</div><div class="gbox">F</div>
+              </div>
+            </div>
+            <div>
+              <p class="demo-label"><code>gap: 12px</code></p>
+              <div class="grid-demo cols-3" style="gap: 12px;">
+                <div class="gbox">A</div><div class="gbox">B</div><div class="gbox">C</div>
+                <div class="gbox">D</div><div class="gbox">E</div><div class="gbox">F</div>
+              </div>
+            </div>
+            <div>
+              <p class="demo-label"><code>gap: 20px 8px</code> (row column)</p>
+              <div class="grid-demo cols-3" style="gap: 20px 8px;">
+                <div class="gbox">A</div><div class="gbox">B</div><div class="gbox">C</div>
+                <div class="gbox">D</div><div class="gbox">E</div><div class="gbox">F</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="demo-block" style="margin-top: 1.5rem;">
+          <h3>Penempatan Item — grid-column & grid-row</h3>
+          <p>Item bisa ditempatkan di posisi tertentu menggunakan nomor grid line.</p>
+          <p class="demo-label">
+            <code>grid-column: 1 / 3</code> → item mulai di line 1, berakhir di line 3 (span 2 kolom)
+          </p>
+          <div class="grid-demo cols-3 span-demo">
+            <div class="gbox span-col">Span 2 kolom</div>
+            <div class="gbox">C</div>
+            <div class="gbox">D</div>
+            <div class="gbox span-row">Span 2 baris</div>
+            <div class="gbox">F</div>
+          </div>
+          <p class="note">
+            <code>grid-column: 1 / 3</code> = dari line 1 sampai line 3 = 2 kolom<br>
+            <code>grid-column: span 2</code> = shorthand untuk span 2 kolom<br>
+            <code>grid-row: 1 / 3</code> = dari row line 1 sampai line 3 = 2 baris
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 4: GRID-TEMPLATE-AREAS
+    ════════════════════════════════════════════ -->
+    <section id="areas" class="section">
+      <h2>4. grid-template-areas — Layout dengan Nama</h2>
+
+      <div class="card">
+        <p>
+          Cara paling intuitif untuk mendefinisikan layout — beri nama setiap area,
+          lalu gambarkan strukturnya seperti ASCII art.
+        </p>
+
+        <div class="code-preview">
+<pre>/*
+  Container:
+  "header  header  header"
+  "sidebar main    main  "
+  "footer  footer  footer"
+*/
+.container {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-template-areas:
+    "header  header  header"
+    "sidebar main    main"
+    "footer  footer  footer";
+  gap: 12px;
+  min-height: 300px;
+}
+
+/* Assign setiap item ke area-nya */
+.header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main    { grid-area: main; }
+.footer  { grid-area: footer; }</pre>
+        </div>
+
+        <div class="areas-demo">
+          <div class="area-header">header</div>
+          <div class="area-sidebar">sidebar</div>
+          <div class="area-main">main content</div>
+          <div class="area-footer">footer</div>
+        </div>
+
+        <div class="tip-box">
+          <strong>💡 Tips:</strong> Pakai titik <code>.</code> untuk sel kosong:
+          <br><code>"header header ."</code> → kolom ketiga di baris header kosong
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 5: AUTO-FIT & MINMAX
+    ════════════════════════════════════════════ -->
+    <section id="autofit" class="section">
+      <h2>5. auto-fit & minmax() — Grid Responsif Otomatis</h2>
+
+      <div class="card">
+        <p>
+          Kombinasi <code>repeat(auto-fit, minmax())</code> adalah cara paling
+          powerful untuk membuat grid yang otomatis menyesuaikan jumlah kolom
+          berdasarkan lebar container — <strong>tanpa media query!</strong>
+        </p>
+
+        <div class="demo-block">
+          <p class="demo-label">
+            <code>grid-template-columns: repeat(auto-fit, minmax(180px, 1fr))</code>
+          </p>
+          <p class="note">
+            → Buat kolom sebanyak mungkin yang bisa muat<br>
+            → Setiap kolom minimal 180px, maksimal 1fr (sama rata)<br>
+            → Resize browser — kolom menyesuaikan otomatis!
+          </p>
+          <div class="grid-autofit">
+            <div class="gbox-card">🖥️ Desktop</div>
+            <div class="gbox-card">📱 Mobile</div>
+            <div class="gbox-card">🎨 Design</div>
+            <div class="gbox-card">🐘 Database</div>
+            <div class="gbox-card">⚙️ Backend</div>
+            <div class="gbox-card">🚀 DevOps</div>
+          </div>
+        </div>
+
+        <div class="demo-block" style="margin-top: 1.5rem;">
+          <h3>auto-fit vs auto-fill</h3>
+          <div class="gap-demos">
+            <div>
+              <p class="demo-label"><code>auto-fit</code> — item mengisi ruang sisa</p>
+              <div class="grid-demo" style="grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); gap: 8px;">
+                <div class="gbox">A</div><div class="gbox">B</div><div class="gbox">C</div>
+              </div>
+              <p class="note">Kolom kosong diciutkan — item tumbuh mengisi</p>
+            </div>
+            <div>
+              <p class="demo-label"><code>auto-fill</code> — kolom kosong tetap ada</p>
+              <div class="grid-demo" style="grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px;">
+                <div class="gbox">A</div><div class="gbox">B</div><div class="gbox">C</div>
+              </div>
+              <p class="note">Kolom kosong tetap ada — item tidak tumbuh</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 6: USE CASE NYATA
+    ════════════════════════════════════════════ -->
+    <section id="usecase" class="section">
+      <h2>6. Use Case Nyata</h2>
+
+      <!-- Layout Halaman -->
+      <div class="card">
+        <h3>6.1 Layout Halaman Lengkap</h3>
+        <p class="note">Header — Sidebar + Konten — Footer dengan grid-template-areas</p>
+        <div class="page-layout-demo">
+          <div class="pl-header">🏠 Header</div>
+          <div class="pl-sidebar">
+            <p>📌 Sidebar</p>
+            <ul>
+              <li>Menu 1</li>
+              <li>Menu 2</li>
+              <li>Menu 3</li>
+            </ul>
+          </div>
+          <div class="pl-main">
+            <p>📄 Main Content</p>
+            <p>Area konten utama yang mengambil sisa ruang.</p>
+          </div>
+          <div class="pl-footer">📋 Footer</div>
+        </div>
+      </div>
+
+      <!-- Galeri Foto -->
+      <div class="card">
+        <h3>6.2 Galeri Foto dengan Spanning</h3>
+        <p class="note">Item tertentu bisa span beberapa kolom/baris</p>
+        <div class="gallery-demo">
+          <div class="gallery-item featured">Featured ★</div>
+          <div class="gallery-item">2</div>
+          <div class="gallery-item">3</div>
+          <div class="gallery-item">4</div>
+          <div class="gallery-item">5</div>
+          <div class="gallery-item tall">6 (tall)</div>
+          <div class="gallery-item">7</div>
+          <div class="gallery-item">8</div>
+        </div>
+      </div>
+
+      <!-- Dashboard -->
+      <div class="card">
+        <h3>6.3 Dashboard Card</h3>
+        <p class="note">
+          <code>repeat(auto-fit, minmax(200px, 1fr))</code> — responsif otomatis
+        </p>
+        <div class="dashboard-demo">
+          <div class="dash-card">
+            <div class="dash-icon">👥</div>
+            <div class="dash-info">
+              <p class="dash-label">Total User</p>
+              <p class="dash-value">1.234</p>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-icon">📦</div>
+            <div class="dash-info">
+              <p class="dash-label">Produk</p>
+              <p class="dash-value">567</p>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-icon">💰</div>
+            <div class="dash-info">
+              <p class="dash-label">Revenue</p>
+              <p class="dash-value">Rp 89jt</p>
+            </div>
+          </div>
+          <div class="dash-card">
+            <div class="dash-icon">📈</div>
+            <div class="dash-info">
+              <p class="dash-label">Growth</p>
+              <p class="dash-value">+12%</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><strong>dev-journey</strong> &mdash; web/04-grid</p>
+      <p>&copy; 2025 Muhammad Alfarezzi Fallevi &nbsp;&middot;&nbsp;
+        <a href="https://github.com/Levi50421905" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

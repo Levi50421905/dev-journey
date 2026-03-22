@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  File   : index.html                                ║
+  ║  Topik  : CSS Dasar — Cascade, Specificity, dll     ║
+  ║  Folder : web/02-css-dasar/                         ║
+  ║  Author : Muhammad Alfarezzi Fallevi (50421905)     ║
+  ╚══════════════════════════════════════════════════════╝
+-->
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>02 — CSS Dasar</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <span class="logo">🎨 CSS Dasar</span>
+      <nav>
+        <ul>
+          <li><a href="#cascade">Cascade</a></li>
+          <li><a href="#specificity">Specificity</a></li>
+          <li><a href="#display">Display</a></li>
+          <li><a href="#position">Position</a></li>
+          <li><a href="#pseudo">Pseudo</a></li>
+          <li><a href="#transition">Transisi</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>CSS Dasar</h1>
+      <p>Cascade, Specificity, Display, Positioning, Pseudo-class & Pseudo-element, Transisi</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 1: CASCADE
+    ═══════════════════════════════════════════════ -->
+    <section id="cascade" class="section">
+      <h2>1. Cascade — Aturan Mana yang Menang?</h2>
+
+      <div class="card">
+        <p>
+          "Cascading" dalam CSS berarti aturan diterapkan <strong>bertingkat</strong>.
+          Ketika ada konflik (dua aturan menyasar elemen yang sama), CSS punya
+          sistem untuk menentukan mana yang dipakai.
+        </p>
+
+        <h3>Urutan Prioritas (dari terendah ke tertinggi):</h3>
+        <ol class="priority-list">
+          <li>
+            <strong>Browser default styles</strong>
+            <span>— style bawaan browser (h1 besar, link biru, dll)</span>
+          </li>
+          <li>
+            <strong>External stylesheet</strong>
+            <span>— file CSS yang di-link (<code>&lt;link rel="stylesheet"&gt;</code>)</span>
+          </li>
+          <li>
+            <strong>Internal stylesheet</strong>
+            <span>— CSS di dalam tag <code>&lt;style&gt;</code></span>
+          </li>
+          <li>
+            <strong>Inline style</strong>
+            <span>— <code>style="..."</code> langsung di elemen HTML</span>
+          </li>
+          <li>
+            <strong><code>!important</code></strong>
+            <span>— paksa menang (hindari — membuat CSS susah di-debug)</span>
+          </li>
+        </ol>
+
+        <div class="demo-box">
+          <h3>Demo Cascade</h3>
+          <p class="cascade-demo">
+            Paragraf ini warnanya ditentukan oleh aturan yang paling spesifik.
+            Lihat CSS-nya untuk memahami mana yang menang.
+          </p>
+          <div class="code-preview">
+<pre>/* Aturan 1 — tag selector */
+p { color: gray; }
+
+/* Aturan 2 — class selector (lebih spesifik) */
+.cascade-demo { color: blue; }
+
+/* Aturan 3 — di bawah = menang jika sama spesifik */
+/* .cascade-demo { color: green; } */</pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 2: SPECIFICITY
+    ═══════════════════════════════════════════════ -->
+    <section id="specificity" class="section">
+      <h2>2. Specificity — Seberapa Spesifik Selector?</h2>
+
+      <div class="card">
+        <p>
+          Specificity adalah "skor" yang menentukan selector mana yang menang
+          saat ada konflik. Skor dihitung dari tipe selector yang dipakai.
+        </p>
+
+        <table class="specificity-table">
+          <thead>
+            <tr>
+              <th>Selector</th>
+              <th>Contoh</th>
+              <th>Skor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Inline style</td>
+              <td><code>style="color: red"</code></td>
+              <td><span class="score score-inline">1,0,0,0</span></td>
+            </tr>
+            <tr>
+              <td>ID selector</td>
+              <td><code>#judul</code></td>
+              <td><span class="score score-id">0,1,0,0</span></td>
+            </tr>
+            <tr>
+              <td>Class / Pseudo-class / Attribute</td>
+              <td><code>.aktif</code> <code>:hover</code> <code>[type]</code></td>
+              <td><span class="score score-class">0,0,1,0</span></td>
+            </tr>
+            <tr>
+              <td>Tag / Pseudo-element</td>
+              <td><code>p</code> <code>h1</code> <code>::before</code></td>
+              <td><span class="score score-tag">0,0,0,1</span></td>
+            </tr>
+            <tr>
+              <td>Universal / Combinator</td>
+              <td><code>*</code> <code>+</code> <code>~</code> <code>&gt;</code></td>
+              <td><span class="score score-zero">0,0,0,0</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="specificity-examples">
+          <h3>Contoh Perhitungan:</h3>
+          <div class="spec-grid">
+            <div class="spec-item">
+              <code>p</code>
+              <span class="spec-score">0,0,0,1</span>
+            </div>
+            <div class="spec-item">
+              <code>.card p</code>
+              <span class="spec-score">0,0,1,1</span>
+            </div>
+            <div class="spec-item">
+              <code>#main .card p</code>
+              <span class="spec-score">0,1,1,1</span>
+            </div>
+            <div class="spec-item winner">
+              <code>#main .card p strong</code>
+              <span class="spec-score">0,1,1,2</span>
+              <span class="winner-badge">Menang!</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <strong>💡 Tips:</strong> Hindari ID selector dan <code>!important</code>
+          untuk styling — susah di-override. Pakai class saja, buat selector
+          se-sederhana mungkin.
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 3: DISPLAY
+    ═══════════════════════════════════════════════ -->
+    <section id="display" class="section">
+      <h2>3. Display — Bagaimana Elemen Ditampilkan</h2>
+
+      <div class="card">
+        <div class="display-grid">
+
+          <div class="display-item">
+            <h3>block</h3>
+            <p>Mengambil <strong>seluruh lebar</strong> yang tersedia. Elemen berikutnya mulai di baris baru.</p>
+            <div class="demo-display">
+              <div class="demo-block">Block 1</div>
+              <div class="demo-block">Block 2 (baris baru)</div>
+            </div>
+            <p class="note">Contoh bawaan: <code>div</code>, <code>p</code>, <code>h1</code>, <code>section</code></p>
+          </div>
+
+          <div class="display-item">
+            <h3>inline</h3>
+            <p>Selebar kontennya. Mengalir dalam teks. <strong>Tidak bisa</strong> diatur width/height.</p>
+            <div class="demo-display">
+              Teks biasa
+              <span class="demo-inline">inline 1</span>
+              <span class="demo-inline">inline 2</span>
+              lanjut teks.
+            </div>
+            <p class="note">Contoh bawaan: <code>span</code>, <code>a</code>, <code>strong</code>, <code>em</code></p>
+          </div>
+
+          <div class="display-item">
+            <h3>inline-block</h3>
+            <p>Mengalir seperti inline, tapi <strong>bisa</strong> diatur width & height.</p>
+            <div class="demo-display">
+              <span class="demo-iblock">Box 1</span>
+              <span class="demo-iblock">Box 2</span>
+              <span class="demo-iblock">Box 3</span>
+            </div>
+            <p class="note">Pakai untuk tombol, badge, tag yang perlu sejajar</p>
+          </div>
+
+          <div class="display-item">
+            <h3>none</h3>
+            <p>Elemen <strong>hilang total</strong> dari halaman — tidak ada di layout.</p>
+            <div class="demo-display">
+              <div class="demo-block">Elemen 1</div>
+              <div class="demo-block" style="display:none;">Elemen 2 (tersembunyi)</div>
+              <div class="demo-block">Elemen 3 (langsung setelah 1)</div>
+            </div>
+            <p class="note">Berbeda dengan <code>visibility: hidden</code> yang masih punya ruang</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 4: POSITIONING
+    ═══════════════════════════════════════════════ -->
+    <section id="position" class="section">
+      <h2>4. Positioning — Menentukan Posisi Elemen</h2>
+
+      <div class="card">
+        <div class="position-cards">
+
+          <div class="pos-card">
+            <span class="pos-badge static">static</span>
+            <p><strong>Default.</strong> Mengikuti aliran normal dokumen. <code>top/left/right/bottom</code> tidak bekerja.</p>
+          </div>
+
+          <div class="pos-card">
+            <span class="pos-badge relative">relative</span>
+            <p>Seperti static, tapi bisa <strong>digeser</strong> dari posisi normalnya. Ruang asli tetap ada. Sering dipakai sebagai kontainer untuk <code>absolute</code>.</p>
+            <div class="pos-demo-relative">
+              <div class="pos-box">Normal</div>
+              <div class="pos-box pos-relative-demo">Digeser 10px</div>
+              <div class="pos-box">Normal</div>
+            </div>
+          </div>
+
+          <div class="pos-card">
+            <span class="pos-badge absolute">absolute</span>
+            <p><strong>Keluar dari aliran</strong> dokumen. Posisi relatif ke parent terdekat yang <code>position != static</code>. Jika tidak ada → relatif ke <code>&lt;html&gt;</code>.</p>
+            <div class="pos-demo-parent">
+              <span class="pos-badge-corner">absolute</span>
+              <p>Parent (position: relative)</p>
+            </div>
+          </div>
+
+          <div class="pos-card">
+            <span class="pos-badge fixed">fixed</span>
+            <p><strong>Menempel di viewport.</strong> Tidak bergerak saat scroll. Cocok untuk: navbar sticky, tombol kembali ke atas, notifikasi.</p>
+            <p class="note">Navbar di halaman ini pakai <code>position: sticky</code>.</p>
+          </div>
+
+          <div class="pos-card">
+            <span class="pos-badge sticky">sticky</span>
+            <p><strong>Campuran relative + fixed.</strong> Normal mengikuti aliran, lalu "menempel" saat mencapai threshold yang ditentukan. Cocok untuk: header tabel, sidebar.</p>
+          </div>
+
+        </div>
+
+        <div class="tip-box">
+          <strong>💡 z-index:</strong> Menentukan tumpukan elemen.
+          Nilai lebih tinggi = tampil di depan. Hanya bekerja pada elemen
+          yang <code>position != static</code>.
+          <br>Konvensi umum: navbar 100, modal 200, tooltip 300.
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 5: PSEUDO-CLASS & PSEUDO-ELEMENT
+    ═══════════════════════════════════════════════ -->
+    <section id="pseudo" class="section">
+      <h2>5. Pseudo-class & Pseudo-element</h2>
+
+      <div class="card-grid">
+
+        <div class="card">
+          <h3>Pseudo-class <code>:</code></h3>
+          <p>Kondisi atau state elemen. Satu titik dua.</p>
+          <ul class="pseudo-list">
+            <li><code>:hover</code> — mouse di atas elemen</li>
+            <li><code>:focus</code> — elemen sedang aktif</li>
+            <li><code>:active</code> — saat diklik</li>
+            <li><code>:visited</code> — link sudah dikunjungi</li>
+            <li><code>:first-child</code> — anak pertama</li>
+            <li><code>:last-child</code> — anak terakhir</li>
+            <li><code>:nth-child(n)</code> — anak ke-n</li>
+            <li><code>:nth-child(even)</code> — anak genap</li>
+            <li><code>:nth-child(odd)</code> — anak ganjil</li>
+            <li><code>:not(.class)</code> — bukan elemen ini</li>
+            <li><code>:disabled</code> — input yang di-disable</li>
+            <li><code>:checked</code> — checkbox/radio yang diceklis</li>
+          </ul>
+
+          <h3 style="margin-top: 1rem;">Demo :hover & :nth-child</h3>
+          <ul class="pseudo-demo-list">
+            <li>Item 1 (ganjil)</li>
+            <li>Item 2 (genap)</li>
+            <li>Item 3 (ganjil)</li>
+            <li>Item 4 (genap)</li>
+            <li>Item 5 — hover saya!</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h3>Pseudo-element <code>::</code></h3>
+          <p>Bagian dari elemen. Dua titik dua.</p>
+          <ul class="pseudo-list">
+            <li><code>::before</code> — konten sebelum elemen</li>
+            <li><code>::after</code> — konten setelah elemen</li>
+            <li><code>::first-line</code> — baris pertama teks</li>
+            <li><code>::first-letter</code> — huruf pertama</li>
+            <li><code>::placeholder</code> — teks placeholder input</li>
+            <li><code>::selection</code> — teks yang diseleksi user</li>
+          </ul>
+
+          <h3 style="margin-top: 1rem;">Demo ::before & ::after</h3>
+          <div class="pseudo-element-demo">
+            <p class="with-before-after">Paragraf ini punya konten sebelum dan sesudahnya dari CSS saja.</p>
+            <p class="drop-cap">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pertama kali belajar CSS, hal yang paling membingungkan adalah pseudo-element karena tidak tampak di HTML.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 6: TRANSISI & ANIMASI DASAR
+    ═══════════════════════════════════════════════ -->
+    <section id="transition" class="section">
+      <h2>6. Transisi & Animasi Dasar</h2>
+
+      <div class="card">
+        <p>
+          <code>transition</code> membuat perubahan style berjalan <strong>mulus</strong>
+          daripada langsung berubah secara instan.
+        </p>
+        <div class="code-preview">
+<pre>/* Format: property | durasi | timing-function | delay */
+transition: background 0.3s ease;
+transition: all 0.2s ease-in-out;
+
+/* Timing functions: */
+ease        → lambat-cepat-lambat (default)
+linear      → konstan
+ease-in     → mulai lambat
+ease-out    → akhir lambat
+ease-in-out → lambat di awal dan akhir</pre>
+        </div>
+
+        <h3 style="margin-top: 1.5rem;">Demo — Hover semua tombol ini:</h3>
+        <div class="transition-demos">
+          <button class="trans-btn trans-color">Warna</button>
+          <button class="trans-btn trans-scale">Scale</button>
+          <button class="trans-btn trans-shadow">Shadow</button>
+          <button class="trans-btn trans-all">Semua</button>
+        </div>
+
+        <h3 style="margin-top: 1.5rem;">CSS Animation dengan @keyframes:</h3>
+        <div class="code-preview">
+<pre>@keyframes nama-animasi {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.elemen {
+  animation: nama-animasi 0.5s ease forwards;
+  /* nama | durasi | timing | fill-mode */
+}</pre>
+        </div>
+        <div class="animation-demo">
+          <div class="animated-box">Animasi masuk ↑</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><strong>dev-journey</strong> &mdash; web/02-css-dasar</p>
+      <p>&copy; 2025 Muhammad Alfarezzi Fallevi &nbsp;&middot;&nbsp;
+        <a href="https://github.com/Levi50421905" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

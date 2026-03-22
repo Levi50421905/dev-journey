@@ -1,0 +1,655 @@
+/*
+  ╔══════════════════════════════════════════════════════╗
+  ║  File   : style.css                                 ║
+  ║  Topik  : CSS Dasar — Selector, Box Model, Layout   ║
+  ║  Folder : web/01-html-dasar/                        ║
+  ║  Author : Muhammad Alfarezzi Fallevi (50421905)     ║
+  ╚══════════════════════════════════════════════════════╝
+
+  CSS (Cascading Style Sheets) mengatur TAMPILAN elemen HTML.
+  Sintaks dasar: selector { property: value; }
+
+  "Cascading" = aturan diterapkan bertingkat dari atas ke bawah.
+  Aturan yang lebih spesifik atau lebih bawah di file = menang.
+*/
+
+
+/* ════════════════════════════════════════════════════
+   1. CSS VARIABLES (Custom Properties)
+   ════════════════════════════════════════════════════
+   KENAPA: Simpan nilai yang sering dipakai.
+   Ganti di satu tempat → berubah di seluruh file.
+   Format: --nama-variabel (selalu pakai dua strip)
+   Cara pakai: var(--nama-variabel)
+*/
+:root {
+  /* Warna */
+  --biru:         #2563eb;
+  --biru-gelap:   #1e40af;
+  --biru-muda:    #dbeafe;
+  --biru-terang:  #eff6ff;
+  --hijau:        #16a34a;
+  --merah:        #dc2626;
+  --kuning:       #d97706;
+
+  /* Teks */
+  --teks:         #111827;
+  --teks-abu:     #6b7280;
+  --teks-terang:  #9ca3af;
+
+  /* Background */
+  --bg:           #f8fafc;
+  --bg-putih:     #ffffff;
+  --bg-abu:       #f3f4f6;
+
+  /* Border */
+  --border:       #e5e7eb;
+  --border-fokus: #93c5fd;
+
+  /* Tipografi */
+  --font:         'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-mono:    'Courier New', Courier, monospace;
+
+  /* Spacing */
+  --radius:       10px;
+  --radius-sm:    6px;
+  --shadow:       0 1px 6px rgba(0, 0, 0, 0.08);
+  --shadow-md:    0 4px 16px rgba(0, 0, 0, 0.10);
+  --transisi:     0.2s ease;
+}
+
+
+/* ════════════════════════════════════════════════════
+   2. RESET & BASE
+   ════════════════════════════════════════════════════
+   KENAPA: Setiap browser punya default style berbeda.
+   Reset menghapus perbedaan itu agar tampilan konsisten.
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
+  /*
+    box-sizing: border-box — SANGAT PENTING!
+
+    Default (content-box):
+      width: 200px + padding: 20px = 240px total → susah dihitung
+
+    border-box:
+      width: 200px = 200px total (padding sudah di dalamnya)
+      → Jauh lebih mudah diprediksi dan dipakai semua developer modern
+  */
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  /*
+    font-size di html = menentukan nilai 1rem
+    1rem = 16px, 1.5rem = 24px, 0.875rem = 14px
+    Pakai rem untuk font & spacing → aksesibel (ikuti preferensi user)
+  */
+  scroll-behavior: smooth;
+  /* Animasi scroll halus saat klik anchor link */
+}
+
+body {
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.65;
+  /*
+    line-height tanpa satuan = kelipatan font-size
+    1.65 = jarak baris 1.65× font-size → nyaman dibaca
+    Rekomendasi: 1.5–1.7 untuk teks panjang
+  */
+  color: var(--teks);
+  background-color: var(--bg);
+}
+
+img {
+  max-width: 100%;
+  /* Gambar tidak melebihi lebar container-nya */
+  height: auto;
+  /* Pertahankan aspect ratio */
+  display: block;
+  /* Hilangkan gap bawah gambar (inline element quirk) */
+  border-radius: var(--radius-sm);
+}
+
+a {
+  color: var(--biru);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ════════════════════════════════════════════════════
+   3. SELECTOR — Cara Memilih Elemen
+   ════════════════════════════════════════════════════
+
+   Tag selector → semua elemen dengan tag tersebut
+   .class       → elemen dengan class tersebut
+   #id          → elemen dengan id tersebut (unik per halaman)
+   A B          → B yang ada di dalam A (descendant)
+   A > B        → B anak langsung A (child)
+   A:hover      → A saat mouse di atasnya (pseudo-class)
+   A::before    → konten sebelum A (pseudo-element)
+*/
+
+/* Heading */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--teks);
+}
+
+h1 { font-size: clamp(1.8rem, 4vw, 2.5rem); }
+/*
+  clamp(min, ideal, max)
+  → font-size minimum 1.8rem, ideal 4% lebar viewport, maksimal 2.5rem
+  → Secara otomatis responsif tanpa media query
+*/
+h2 { font-size: 1.5rem; margin-bottom: 1.25rem; }
+h3 { font-size: 1.15rem; margin-bottom: 0.75rem; }
+
+p  { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: #f1f5f9;
+  color: #e11d48;
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+}
+
+blockquote {
+  border-left: 4px solid var(--biru);
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+  background: var(--biru-terang);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-style: italic;
+  color: var(--teks-abu);
+}
+
+blockquote cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--teks);
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.25rem 0;
+}
+
+mark {
+  background: #fef08a;
+  padding: 0.1em 0.3em;
+  border-radius: 3px;
+}
+
+/* ════════════════════════════════════════════════════
+   4. LAYOUT UTAMA
+   ════════════════════════════════════════════════════
+   Pakai CSS Grid untuk layout halaman secara keseluruhan.
+   (Flexbox = 1 dimensi, Grid = 2 dimensi)
+*/
+
+/* Header */
+header {
+  background: var(--biru);
+  color: white;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: white;
+}
+
+.logo-icon { font-size: 1.4rem; }
+
+/* Navigasi */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 0.25rem;
+}
+
+nav a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background var(--transisi), color var(--transisi);
+}
+
+nav a:hover {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  text-decoration: none;
+}
+
+/* Wrapper konten + sidebar */
+.page-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 2rem;
+  align-items: start;
+}
+
+main {
+  min-width: 0; /* cegah overflow di grid */
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, var(--biru) 0%, var(--biru-gelap) 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: var(--radius);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.hero h1 { color: white; margin-bottom: 0.75rem; }
+
+.hero-sub {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  max-width: 540px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.hero-sub strong { color: #fde68a; }
+
+/* Section */
+.section {
+  margin-bottom: 3rem;
+}
+
+.section > h2 {
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1.5rem;
+  color: var(--biru-gelap);
+}
+
+/* Card */
+.card {
+  background: var(--bg-putih);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* Note / caption */
+.note {
+  font-size: 0.85rem;
+  color: var(--teks-abu);
+  margin-top: 0.5rem;
+}
+
+/* ════════════════════════════════════════════════════
+   5. TABEL
+   ════════════════════════════════════════════════════
+*/
+table {
+  width: 100%;
+  border-collapse: collapse;
+  /*
+    border-collapse: collapse
+    → Gabungkan border sel yang berdekatan.
+    → Tanpa ini: setiap sel punya border sendiri → double border.
+  */
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+caption {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--teks-abu);
+  text-align: left;
+  margin-bottom: 0.5rem;
+  padding: 0;
+}
+
+th, td {
+  padding: 0.7rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+thead th {
+  background: var(--biru);
+  color: white;
+  font-weight: 600;
+}
+
+thead th:first-child { border-radius: var(--radius-sm) 0 0 0; }
+thead th:last-child  { border-radius: 0 var(--radius-sm) 0 0; }
+
+tbody tr:nth-child(even) { background: var(--bg-abu); }
+/* nth-child(even) → baris genap (2, 4, 6...) */
+
+tbody tr:hover { background: var(--biru-terang); }
+
+tfoot td {
+  font-size: 0.85rem;
+  color: var(--teks-abu);
+  font-style: italic;
+  background: var(--bg-abu);
+}
+
+/* ════════════════════════════════════════════════════
+   6. FORM
+   ════════════════════════════════════════════════════
+*/
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+fieldset {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+legend {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--biru);
+  padding: 0 0.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+}
+
+.form-group:last-child { margin-bottom: 0; }
+
+label {
+  font-weight: 500;
+  font-size: 0.9rem;
+  color: var(--teks);
+}
+
+.required { color: var(--merah); }
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  padding: 0.6rem 0.875rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-family: var(--font);
+  color: var(--teks);
+  background: var(--bg-putih);
+  width: 100%;
+  transition: border-color var(--transisi), box-shadow var(--transisi);
+}
+
+/* :focus = saat elemen sedang aktif/dipilih user */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--biru);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+/* Placeholder — teks petunjuk abu-abu di dalam input */
+input::placeholder,
+textarea::placeholder {
+  color: var(--teks-terang);
+  font-size: 0.9rem;
+}
+
+textarea { resize: vertical; min-height: 100px; }
+
+.checkbox-group,
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.checkbox-label,
+.radio-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.form-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+  padding-top: 0.5rem;
+}
+
+/* Button */
+.btn-primary,
+.btn-secondary {
+  padding: 0.65rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transisi), transform var(--transisi);
+}
+
+.btn-primary {
+  background: var(--biru);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--biru-gelap);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: var(--bg-abu);
+  color: var(--teks-abu);
+  border: 1px solid var(--border);
+}
+
+.btn-secondary:hover { background: var(--border); }
+
+/* ════════════════════════════════════════════════════
+   7. MEDIA & LINK DEMO
+   ════════════════════════════════════════════════════
+*/
+.link-demo {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.link-demo li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.link-demo a {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.entity-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem;
+}
+
+.entity-list li { font-size: 0.9rem; }
+
+/* ════════════════════════════════════════════════════
+   8. SIDEBAR
+   ════════════════════════════════════════════════════
+*/
+.sidebar {
+  /* Sidebar tidak ikut di page-wrapper → taruh di luar main */
+}
+
+.sidebar-sticky {
+  background: var(--bg-putih);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 80px; /* di bawah navbar sticky */
+  font-size: 0.88rem;
+}
+
+.sidebar-sticky h3 {
+  font-size: 0.95rem;
+  color: var(--biru);
+  margin-bottom: 0.75rem;
+}
+
+.sidebar-sticky ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-sticky li {
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.4;
+}
+
+.sidebar-sticky li:last-child { border-bottom: none; }
+
+/* ════════════════════════════════════════════════════
+   9. FOOTER
+   ════════════════════════════════════════════════════
+*/
+footer {
+  background: var(--teks);
+  color: rgba(255,255,255,0.75);
+  padding: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+footer p { margin-bottom: 0.3rem; }
+footer p:last-child { margin-bottom: 0; }
+footer strong { color: white; }
+footer a { color: #93c5fd; }
+footer a:hover { color: white; }
+
+/* ════════════════════════════════════════════════════
+   10. RESPONSIVE — Media Query
+   ════════════════════════════════════════════════════
+   @media → terapkan CSS hanya pada kondisi tertentu.
+   max-width: 768px → berlaku saat lebar layar ≤ 768px
+
+   Breakpoint umum:
+   480px  → mobile kecil
+   768px  → tablet / mobile besar
+   1024px → laptop
+   1280px → desktop
+-->
+*/
+@media (max-width: 1024px) {
+  .page-wrapper {
+    grid-template-columns: 1fr;
+    /* 1 kolom — sidebar ke bawah */
+  }
+
+  .sidebar-sticky {
+    position: static;
+    /* Sidebar tidak sticky di mobile */
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  header { padding: 0 1rem; }
+
+  .header-inner { flex-direction: column; height: auto; padding: 0.75rem 0; gap: 0.5rem; }
+
+  nav ul { gap: 0; flex-wrap: wrap; justify-content: center; }
+
+  nav a { font-size: 0.82rem; padding: 0.3rem 0.5rem; }
+
+  .hero { padding: 2rem 1.25rem; }
+
+  .page-wrapper { padding: 1.25rem 1rem; }
+
+  .card { padding: 1.1rem; }
+
+  .entity-list { grid-template-columns: 1fr; }
+
+  .form-actions { flex-direction: column; }
+  .btn-primary, .btn-secondary { width: 100%; text-align: center; }
+}

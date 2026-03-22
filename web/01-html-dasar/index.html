@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  File   : index.html                                ║
+  ║  Topik  : HTML Dasar — Struktur & Elemen Semantik   ║
+  ║  Folder : web/01-html-dasar/                        ║
+  ║  Author : Muhammad Alfarezzi Fallevi (50421905)     ║
+  ║  Repo   : github.com/Levi50421905/dev-journey       ║
+  ╚══════════════════════════════════════════════════════╝
+
+  Catatan belajar:
+  HTML bukan bahasa pemrograman — HTML adalah bahasa MARKUP.
+  HTML mendefinisikan STRUKTUR dan MAKNA konten, bukan tampilan.
+  Tampilan diatur oleh CSS. Logika diatur oleh JavaScript.
+-->
+
+<html lang="id">
+<!--
+  lang="id"
+  → Memberitahu browser & screen reader bahasa halaman ini.
+  → Penting untuk aksesibilitas dan SEO.
+-->
+
+<head>
+  <!--
+    <head> → Informasi TENTANG halaman, tidak tampil di browser.
+    Dibaca browser sebelum halaman dirender.
+  -->
+
+  <meta charset="UTF-8">
+  <!--
+    charset="UTF-8"
+    → Encoding karakter. UTF-8 mendukung semua karakter:
+      huruf latin, aksara, emoji, karakter Arab, Jepang, dll.
+    → Tanpa ini, karakter seperti é, ñ bisa rusak/kotak.
+    → Selalu taruh PALING ATAS di dalam <head>.
+  -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    viewport
+    → KUNCI responsive design di mobile.
+    → width=device-width  : lebar halaman = lebar layar device
+    → initial-scale=1.0   : zoom awal = 100%
+    → Tanpa ini, halaman di HP tampak seperti versi desktop
+      yang diperkecil — teks sangat kecil, tidak bisa dibaca.
+  -->
+
+  <title>01 — HTML Dasar</title>
+  <!--
+    <title>
+    → Teks di tab browser & hasil pencarian Google.
+    → Berbeda dengan <h1> yang tampil di halaman.
+    → Penting untuk SEO — buat deskriptif & unik per halaman.
+  -->
+
+  <link rel="stylesheet" href="style.css">
+  <!--
+    <link rel="stylesheet" href="...">
+    → Menghubungkan file CSS eksternal.
+    → Taruh di <head> agar CSS dimuat SEBELUM konten tampil.
+      (mencegah FOUC — Flash of Unstyled Content)
+  -->
+</head>
+
+<body>
+  <!--
+    <body> → Semua konten yang tampil di browser.
+    Hanya boleh ada SATU <body> per halaman.
+  -->
+
+  <!-- ═══════════════════════════════════════════
+    ELEMEN SEMANTIK — Pembeda HTML Modern vs Lama
+    ═══════════════════════════════════════════════
+    Semantik = elemen yang punya MAKNA, bukan sekadar wadah.
+
+    HTML lama (tidak semantik):
+      <div id="header">, <div id="nav">, <div id="footer">
+
+    HTML modern (semantik):
+      <header>, <nav>, <footer>
+
+    Manfaat semantik:
+    1. Screen reader tahu ini navigasi, ini konten utama, dll.
+    2. Mesin pencari memahami struktur halaman dengan baik.
+    3. Kode lebih mudah dibaca developer lain.
+  -->
+
+  <header>
+    <!--
+      <header>
+      → Bagian kepala halaman atau bagian artikel.
+      → Biasanya berisi logo, judul situs, navigasi utama.
+      → BUKAN berarti heading (h1/h2) — itu berbeda!
+      → Bisa ada lebih dari satu <header> per halaman
+        (misal: header halaman + header artikel).
+    -->
+
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">🌐</span>
+        <span class="logo-text">Web Fundamentals</span>
+      </div>
+
+      <nav>
+        <!--
+          <nav>
+          → Menandai blok NAVIGASI UTAMA halaman.
+          → Screen reader bisa langsung lompat ke sini.
+          → Tidak semua kumpulan link perlu <nav> —
+            hanya navigasi utama/penting.
+        -->
+        <ul>
+          <!--
+            Kenapa <ul> untuk navigasi?
+            → Navigasi adalah daftar link — secara semantik memang list.
+            → Ini adalah praktik standar semua website profesional.
+            → <ul> = unordered list (daftar tidak berurutan/tanpa angka)
+          -->
+          <li><a href="#elemen-teks">Teks</a></li>
+          <li><a href="#elemen-list">List</a></li>
+          <li><a href="#elemen-tabel">Tabel</a></li>
+          <li><a href="#elemen-form">Form</a></li>
+          <li><a href="#elemen-media">Media</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!--
+      <main>
+      → Konten UTAMA halaman — unik per halaman.
+      → Hanya SATU <main> per halaman.
+      → Browser & screen reader bisa langsung lompat ke sini
+        (skip header/nav — accessibility feature).
+    -->
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <h1>Belajar HTML Dasar</h1>
+      <!--
+        <h1>
+        → Heading terpenting — judul utama halaman.
+        → Hanya SATU <h1> per halaman (penting untuk SEO).
+        → Ukuran besar bukan karena CSS default,
+          tapi karena memang paling penting secara hierarki.
+
+        Hierarki heading (JANGAN diskip!):
+        h1 → Judul halaman (1x)
+        h2 → Bagian utama
+        h3 → Sub-bagian
+        h4–h6 → Jarang dipakai
+      -->
+      <p class="hero-sub">
+        Memahami struktur, semantik, dan elemen HTML —
+        <strong>bukan sekadar hapal, tapi paham kenapa.</strong>
+      </p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 1: ELEMEN TEKS
+    ═══════════════════════════════════════════════ -->
+    <section id="elemen-teks" class="section">
+      <h2>1. Elemen Teks</h2>
+
+      <article class="card">
+        <!--
+          <article>
+          → Konten yang bisa berdiri sendiri dan bermakna
+            di luar konteks halaman ini.
+          → Contoh: postingan blog, berita, komentar, produk.
+          → Berbeda dengan <section> yang butuh konteks halaman.
+        -->
+        <h3>Tag Teks yang Sering Dipakai</h3>
+
+        <p>
+          Ini adalah paragraf biasa dengan tag <code>&lt;p&gt;</code>.
+          Browser otomatis memberi jarak atas-bawah antar paragraf.
+        </p>
+
+        <p>
+          <!-- strong vs b -->
+          <strong>strong</strong> = teks PENTING secara semantik
+          (screen reader menekankan ini). Berbeda dengan
+          <b>b</b> yang hanya visual bold tanpa makna.
+        </p>
+
+        <p>
+          <!-- em vs i -->
+          <em>em</em> = teks yang ditekankan dalam kalimat
+          (screen reader mengubah intonasi). Berbeda dengan
+          <i>i</i> yang hanya visual italic (untuk judul buku,
+          istilah teknis, dll).
+        </p>
+
+        <p>
+          Kode inline: <code>console.log('hello')</code> —
+          pakai <code>&lt;code&gt;</code> untuk kode dalam teks.
+        </p>
+
+        <p>
+          Subscript: H<sub>2</sub>O &nbsp;|&nbsp;
+          Superscript: x<sup>2</sup> + y<sup>2</sup>
+        </p>
+
+        <p>
+          <mark>Highlighted text</mark> pakai <code>&lt;mark&gt;</code> —
+          berguna untuk menandai hasil pencarian atau teks penting.
+        </p>
+
+        <p>
+          <s>Harga lama: Rp 200.000</s> →
+          Harga baru: Rp 150.000
+          (<code>&lt;s&gt;</code> untuk teks yang sudah tidak relevan)
+        </p>
+
+        <blockquote>
+          <!--
+            <blockquote>
+            → Kutipan panjang dari sumber lain.
+            → Browser memberi indent otomatis.
+            → cite="" bisa diisi URL sumber.
+          -->
+          <p>"The best way to learn web development is to build real things and break them intentionally."</p>
+          <cite>— Setiap senior developer yang pernah ada</cite>
+          <!--
+            <cite> → sumber kutipan (judul karya, nama orang)
+          -->
+        </blockquote>
+
+        <!-- Garis pemisah horizontal -->
+        <hr>
+        <!--
+          <hr> = horizontal rule
+          → Pemisah tematik antar konten (bukan sekadar garis dekorasi).
+          → Elemen void — tidak punya tag penutup.
+        -->
+
+        <p>
+          Teks dengan line break eksplisit:<br>
+          Baris kedua di sini.<br>
+          Baris ketiga.
+          <!--
+            <br> = line break
+            → Pakai hanya saat line break ADALAH bagian dari konten
+              (puisi, alamat, lirik lagu).
+            → Jangan pakai <br> untuk membuat jarak antar paragraf —
+              gunakan margin di CSS.
+          -->
+        </p>
+      </article>
+
+      <!-- HTML Entities -->
+      <article class="card">
+        <h3>HTML Entities — Karakter Khusus</h3>
+        <p>Karakter yang tidak bisa langsung ditulis di HTML:</p>
+        <ul class="entity-list">
+          <li><code>&amp;lt;</code> → &lt; (less than)</li>
+          <li><code>&amp;gt;</code> → &gt; (greater than)</li>
+          <li><code>&amp;amp;</code> → &amp; (ampersand)</li>
+          <li><code>&amp;copy;</code> → &copy; (copyright)</li>
+          <li><code>&amp;nbsp;</code> → non-breaking space</li>
+          <li><code>&amp;mdash;</code> → &mdash; (em dash)</li>
+          <li><code>&amp;hellip;</code> → &hellip; (ellipsis)</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 2: LIST
+    ═══════════════════════════════════════════════ -->
+    <section id="elemen-list" class="section">
+      <h2>2. List</h2>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Unordered List &lt;ul&gt;</h3>
+          <p>Untuk daftar yang urutannya <strong>tidak penting</strong>:</p>
+          <ul>
+            <li>HTML — struktur</li>
+            <li>CSS — tampilan</li>
+            <li>JavaScript — interaksi</li>
+          </ul>
+          <p class="note">Pakai <code>&lt;ul&gt;</code> untuk fitur, bahan, navigasi, dll.</p>
+        </article>
+
+        <article class="card">
+          <h3>Ordered List &lt;ol&gt;</h3>
+          <p>Untuk daftar yang urutannya <strong>penting</strong>:</p>
+          <ol>
+            <li>Tulis HTML dulu</li>
+            <li>Tambahkan CSS</li>
+            <li>Baru JavaScript</li>
+          </ol>
+          <p class="note">Pakai <code>&lt;ol&gt;</code> untuk langkah, ranking, prosedur.</p>
+        </article>
+
+        <article class="card">
+          <h3>Description List &lt;dl&gt;</h3>
+          <p>Untuk pasangan istilah–definisi:</p>
+          <dl>
+            <dt>HTML</dt>
+            <dd>HyperText Markup Language — struktur halaman web</dd>
+            <dt>CSS</dt>
+            <dd>Cascading Style Sheets — tampilan halaman web</dd>
+            <dt>JS</dt>
+            <dd>JavaScript — interaktivitas halaman web</dd>
+          </dl>
+          <!--
+            <dl> = description list
+            <dt> = description term (istilah)
+            <dd> = description detail (definisi/penjelasan)
+            Cocok untuk: kamus, FAQ, metadata
+          -->
+        </article>
+
+        <article class="card">
+          <h3>Nested List</h3>
+          <p>List di dalam list:</p>
+          <ul>
+            <li>Frontend
+              <ul>
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+              </ul>
+            </li>
+            <li>Backend
+              <ul>
+                <li>PHP</li>
+                <li>Node.js</li>
+                <li>Python</li>
+              </ul>
+            </li>
+            <li>Database
+              <ul>
+                <li>MySQL</li>
+                <li>PostgreSQL</li>
+              </ul>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 3: TABEL
+    ═══════════════════════════════════════════════ -->
+    <section id="elemen-tabel" class="section">
+      <h2>3. Tabel</h2>
+
+      <article class="card">
+        <h3>Kapan Pakai Tabel?</h3>
+        <p>
+          Tabel dipakai untuk <strong>data tabular</strong> — data yang
+          memang berbentuk baris dan kolom. <em>Jangan</em> pakai tabel
+          untuk layout halaman (dulu sering dilakukan, sekarang salah
+          secara semantik — gunakan Flexbox atau Grid).
+        </p>
+
+        <table>
+          <!--
+            Struktur tabel:
+            <table>   → wadah utama
+            <caption> → judul tabel (opsional, baik untuk aksesibilitas)
+            <thead>   → baris header
+            <tbody>   → isi data
+            <tfoot>   → baris footer (total, catatan)
+            <tr>      → table row (baris)
+            <th>      → table header cell (bold & center by default)
+            <td>      → table data cell (biasa)
+
+            border-collapse: collapse di CSS → satukan border sel
+          -->
+          <caption>Perbandingan Elemen HTML Semantik vs Non-Semantik</caption>
+          <thead>
+            <tr>
+              <th>Elemen</th>
+              <th>Tipe</th>
+              <th>Makna</th>
+              <th>Contoh Penggunaan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>&lt;header&gt;</code></td>
+              <td>Semantik ✅</td>
+              <td>Kepala halaman/artikel</td>
+              <td>Logo, navigasi utama</td>
+            </tr>
+            <tr>
+              <td><code>&lt;nav&gt;</code></td>
+              <td>Semantik ✅</td>
+              <td>Navigasi utama</td>
+              <td>Menu, breadcrumb</td>
+            </tr>
+            <tr>
+              <td><code>&lt;main&gt;</code></td>
+              <td>Semantik ✅</td>
+              <td>Konten utama halaman</td>
+              <td>Konten unik per halaman</td>
+            </tr>
+            <tr>
+              <td><code>&lt;article&gt;</code></td>
+              <td>Semantik ✅</td>
+              <td>Konten mandiri</td>
+              <td>Postingan blog, berita, produk</td>
+            </tr>
+            <tr>
+              <td><code>&lt;section&gt;</code></td>
+              <td>Semantik ✅</td>
+              <td>Kelompok konten bertema</td>
+              <td>Bagian dengan heading sendiri</td>
+            </tr>
+            <tr>
+              <td><code>&lt;aside&gt;</code></td>
+              <td>Semantik ✅</td>
+              <td>Konten sampingan</td>
+              <td>Sidebar, tip, iklan terkait</td>
+            </tr>
+            <tr>
+              <td><code>&lt;footer&gt;</code></td>
+              <td>Semantik ✅</td>
+              <td>Kaki halaman/artikel</td>
+              <td>Copyright, link tambahan</td>
+            </tr>
+            <tr>
+              <td><code>&lt;div&gt;</code></td>
+              <td>Non-semantik ❌</td>
+              <td>Wadah generik (block)</td>
+              <td>Hanya untuk styling/layout</td>
+            </tr>
+            <tr>
+              <td><code>&lt;span&gt;</code></td>
+              <td>Non-semantik ❌</td>
+              <td>Wadah generik (inline)</td>
+              <td>Styling sebagian teks</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="4">
+                Selalu pilih elemen semantik jika tersedia.
+                Pakai <code>&lt;div&gt;</code> dan <code>&lt;span&gt;</code>
+                hanya jika tidak ada elemen semantik yang sesuai.
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      </article>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 4: FORM & INPUT
+    ═══════════════════════════════════════════════ -->
+    <section id="elemen-form" class="section">
+      <h2>4. Form & Input</h2>
+
+      <article class="card">
+        <h3>Form Registrasi — Contoh Lengkap</h3>
+        <p class="note">
+          <strong>GET vs POST:</strong> GET = data di URL (untuk pencarian/filter).
+          POST = data tersembunyi (untuk login, kirim data sensitif, upload file).
+        </p>
+
+        <form action="#" method="POST" class="form" novalidate>
+          <!--
+            action → URL tujuan pengiriman data
+            method → GET atau POST
+            novalidate → matikan validasi bawaan browser (untuk styling custom)
+          -->
+
+          <!-- Fieldset mengelompokkan input yang berkaitan -->
+          <fieldset>
+            <legend>Data Pribadi</legend>
+            <!--
+              <fieldset> → kelompok input yang berkaitan
+              <legend>   → judul fieldset
+              Penting untuk aksesibilitas form yang panjang.
+            -->
+
+            <div class="form-group">
+              <label for="nama">Nama Lengkap <span class="required">*</span></label>
+              <input
+                type="text"
+                id="nama"
+                name="nama"
+                placeholder="Contoh: Muhammad Alfarezzi"
+                required
+                autocomplete="name"
+              >
+              <!--
+                id="nama" harus sama dengan for="nama" di label
+                → Klik label = input aktif (UX lebih baik)
+                → Wajib untuk aksesibilitas (screen reader)
+
+                required     → field wajib diisi
+                autocomplete → petunjuk browser untuk autofill
+                placeholder  → teks abu-abu petunjuk (bukan pengganti label!)
+              -->
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email <span class="required">*</span></label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="nama@email.com"
+                required
+                autocomplete="email"
+              >
+              <!-- type="email" → browser validasi format email otomatis -->
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password <span class="required">*</span></label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                minlength="8"
+                placeholder="Minimal 8 karakter"
+                required
+              >
+              <!-- type="password" → karakter disembunyikan -->
+            </div>
+
+            <div class="form-group">
+              <label for="tgl-lahir">Tanggal Lahir</label>
+              <input type="date" id="tgl-lahir" name="tgl_lahir">
+              <!-- type="date" → date picker otomatis -->
+            </div>
+
+            <div class="form-group">
+              <label for="no-hp">Nomor HP</label>
+              <input
+                type="tel"
+                id="no-hp"
+                name="no_hp"
+                placeholder="08xxxxxxxxxx"
+                pattern="[0-9]{10,13}"
+              >
+              <!--
+                type="tel"   → keyboard angka di mobile
+                pattern      → validasi format (regex)
+              -->
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Preferensi</legend>
+
+            <div class="form-group">
+              <label for="kota">Kota Asal</label>
+              <select id="kota" name="kota">
+                <!--
+                  <select> → dropdown pilihan
+                  value    → data yang dikirim ke server
+                -->
+                <option value="">-- Pilih Kota --</option>
+                <option value="jakarta">Jakarta</option>
+                <option value="bandung">Bandung</option>
+                <option value="surabaya">Surabaya</option>
+                <option value="yogyakarta">Yogyakarta</option>
+                <option value="medan">Medan</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Bidang yang Diminati</label>
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input type="checkbox" name="minat" value="frontend"> Frontend
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="minat" value="backend"> Backend
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="minat" value="database"> Database
+                </label>
+                <label class="checkbox-label">
+                  <input type="checkbox" name="minat" value="mobile"> Mobile
+                </label>
+              </div>
+              <!-- checkbox → pilihan multiple (boleh pilih lebih dari satu) -->
+            </div>
+
+            <div class="form-group">
+              <label>Level Pengalaman</label>
+              <div class="radio-group">
+                <label class="radio-label">
+                  <input type="radio" name="level" value="pemula"> Pemula
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="level" value="menengah"> Menengah
+                </label>
+                <label class="radio-label">
+                  <input type="radio" name="level" value="lanjut"> Lanjut
+                </label>
+              </div>
+              <!-- radio → pilihan tunggal dari beberapa opsi (nama harus sama) -->
+            </div>
+
+            <div class="form-group">
+              <label for="bio">Bio Singkat</label>
+              <textarea
+                id="bio"
+                name="bio"
+                rows="4"
+                placeholder="Ceritakan sedikit tentang diri kamu..."
+                maxlength="300"
+              ></textarea>
+              <!--
+                <textarea> → input teks multi-baris
+                rows       → tinggi awal (jumlah baris terlihat)
+                maxlength  → batas maksimal karakter
+                Berbeda dengan <input>: textarea punya tag penutup
+                dan isi awal ditulis di antara tag (bukan value="").
+              -->
+            </div>
+
+            <div class="form-group">
+              <label for="foto">Foto Profil</label>
+              <input type="file" id="foto" name="foto" accept="image/*">
+              <!--
+                type="file"  → dialog pilih file
+                accept       → filter tipe file (image/*, .pdf, dll)
+              -->
+            </div>
+          </fieldset>
+
+          <div class="form-actions">
+            <button type="reset" class="btn-secondary">Reset</button>
+            <button type="submit" class="btn-primary">Daftar Sekarang</button>
+            <!--
+              type="submit" → kirim form
+              type="reset"  → reset semua input ke nilai awal
+              type="button" → tombol biasa, tidak trigger form
+            -->
+          </div>
+        </form>
+      </article>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+      SECTION 5: MEDIA — GAMBAR & LINK
+    ═══════════════════════════════════════════════ -->
+    <section id="elemen-media" class="section">
+      <h2>5. Gambar & Link</h2>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Gambar &lt;img&gt;</h3>
+          <img
+            src="https://picsum.photos/400/220?random=1"
+            alt="Gambar demo dari Lorem Picsum — gambar acak 400x220 piksel"
+            width="400"
+            height="220"
+            loading="lazy"
+          >
+          <!--
+            src     → path atau URL gambar
+            alt     → WAJIB diisi! Teks jika gambar gagal dimuat.
+                      Screen reader membacakan ini untuk tunanetra.
+                      SEO: mesin pencari membaca alt text.
+                      Jika gambar dekoratif: alt="" (kosong, bukan dihapus)
+            width & height → mencegah layout shift saat loading
+            loading="lazy" → gambar dimuat hanya saat hampir terlihat
+                             (hemat bandwidth, performa lebih baik)
+          -->
+          <p class="note">
+            Selalu isi <code>alt</code>! Walau hanya <code>alt=""</code>
+            untuk gambar dekoratif.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Link &lt;a&gt;</h3>
+          <ul class="link-demo">
+            <li>
+              <!-- Link eksternal -->
+              <a href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer">
+                MDN Web Docs ↗
+              </a>
+              <span class="note">— target="_blank" + rel="noopener noreferrer" untuk keamanan</span>
+            </li>
+            <li>
+              <!-- Link internal (anchor ke section di halaman ini) -->
+              <a href="#elemen-teks">Kembali ke bagian Teks ↑</a>
+              <span class="note">— href="#id" untuk link ke bagian di halaman yang sama</span>
+            </li>
+            <li>
+              <!-- Link email -->
+              <a href="mailto:levialfarezzi@email.com">Kirim Email</a>
+              <span class="note">— href="mailto:..." membuka aplikasi email</span>
+            </li>
+            <li>
+              <!-- Link telepon -->
+              <a href="tel:+6281234567890">Hubungi via Telepon</a>
+              <span class="note">— href="tel:..." di mobile langsung buka dialer</span>
+            </li>
+            <li>
+              <!-- Link download -->
+              <a href="#" download="contoh.pdf">Download File</a>
+              <span class="note">— atribut download memaksa browser download file</span>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <aside class="sidebar">
+    <!--
+      <aside>
+      → Konten yang berkaitan tapi bukan bagian utama.
+      → Contoh: sidebar, tip, link terkait, iklan.
+      → Secara visual biasanya di sisi halaman (via CSS).
+    -->
+    <div class="sidebar-sticky">
+      <h3>📌 Catatan Penting</h3>
+      <ul>
+        <li>Hanya <strong>1 &lt;h1&gt;</strong> per halaman</li>
+        <li>Jangan skip level heading (h1 → h3)</li>
+        <li>Selalu isi atribut <code>alt</code> pada gambar</li>
+        <li>Pakai elemen semantik, bukan sekadar <code>&lt;div&gt;</code></li>
+        <li><code>&lt;label for&gt;</code> harus terhubung ke <code>id</code> input</li>
+        <li>GET untuk read, POST untuk write/sensitif</li>
+      </ul>
+
+      <h3 style="margin-top: 1.5rem;">🔗 Referensi</h3>
+      <ul>
+        <li><a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element" target="_blank" rel="noopener noreferrer">MDN HTML Elements</a></li>
+        <li><a href="https://validator.w3.org" target="_blank" rel="noopener noreferrer">W3C Validator</a></li>
+        <li><a href="https://web.dev/learn/html" target="_blank" rel="noopener noreferrer">web.dev/learn/html</a></li>
+      </ul>
+    </div>
+  </aside>
+
+  <footer>
+    <!--
+      <footer>
+      → Bagian bawah halaman atau artikel.
+      → Biasanya: copyright, link tambahan, info kontak.
+    -->
+    <div class="footer-inner">
+      <p>
+        <strong>dev-journey</strong> &mdash; web/01-html-dasar
+      </p>
+      <p>
+        &copy; 2025 Muhammad Alfarezzi Fallevi &nbsp;&middot;&nbsp;
+        <a href="https://github.com/Levi50421905" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>

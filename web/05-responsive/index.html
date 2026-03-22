@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  File   : index.html                                ║
+  ║  Topik  : Responsive Design — Mobile-First          ║
+  ║  Folder : web/05-responsive/                        ║
+  ║  Author : Muhammad Alfarezzi Fallevi (50421905)     ║
+  ║  Repo   : github.com/Levi50421905/dev-journey       ║
+  ╚══════════════════════════════════════════════════════╝
+
+  Responsive Design = halaman web yang tampilannya menyesuaikan
+  otomatis dengan ukuran layar device (HP, tablet, laptop, desktop).
+
+  Pendekatan: MOBILE FIRST
+  → Tulis CSS untuk mobile dulu (layar kecil)
+  → Tambahkan CSS untuk layar lebih besar dengan @media
+  → Kenapa? Karena lebih mudah "menambah" untuk layar besar
+    daripada "mengurangi" untuk layar kecil
+-->
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--
+    viewport META TAG — WAJIB untuk responsive!
+    Tanpa ini: halaman di HP tampak seperti desktop yang diperkecil.
+    width=device-width  → lebar halaman = lebar layar device
+    initial-scale=1.0   → zoom awal = 100%
+  -->
+  <title>05 — Responsive Design</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
+        <a href="#" class="logo">🌐 Dev Journey</a>
+
+        <!-- Tombol hamburger — hanya tampil di mobile -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="main-nav" id="mainNav">
+          <ul>
+            <li><a href="#mediaquery">Media Query</a></li>
+            <li><a href="#breakpoint">Breakpoint</a></li>
+            <li><a href="#fluid">Fluid</a></li>
+            <li><a href="#gambar">Gambar</a></li>
+            <li><a href="#contoh">Contoh</a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-content">
+          <div class="hero-text">
+            <h1>Responsive Design</h1>
+            <p>
+              Satu kode HTML — tampil sempurna di semua ukuran layar.
+              Dari layar HP 320px hingga monitor 4K 2560px.
+            </p>
+            <div class="hero-btns">
+              <a href="#mediaquery" class="btn btn-primary">Mulai Belajar</a>
+              <a href="https://github.com/Levi50421905/dev-journey" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </div>
+          </div>
+          <div class="hero-devices">
+            <div class="device device-desktop">🖥️</div>
+            <div class="device device-tablet">📱</div>
+            <div class="device device-mobile">📲</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <!-- ═══════════════════════════════════════
+        SECTION 1: MEDIA QUERY
+      ════════════════════════════════════════════ -->
+      <section id="mediaquery" class="section">
+        <h2>1. Media Query — @media</h2>
+
+        <div class="card">
+          <p>
+            Media query memungkinkan kita menerapkan CSS hanya pada
+            kondisi tertentu — biasanya berdasarkan <strong>lebar layar</strong>.
+          </p>
+
+          <h3>Sintaks Dasar</h3>
+          <div class="code-block">
+<pre>/* Terapkan CSS ini HANYA jika lebar layar minimal 768px */
+@media (min-width: 768px) {
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+}
+
+/* Terapkan CSS ini HANYA jika lebar layar maksimal 767px */
+@media (max-width: 767px) {
+  .nav-menu {
+    display: none; /* sembunyikan menu di mobile */
+  }
+}
+
+/* Gabungan — antara 768px dan 1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* hanya untuk tablet */
+}</pre>
+          </div>
+
+          <h3 style="margin-top: 1.25rem;">Mobile-First vs Desktop-First</h3>
+          <div class="comparison-grid">
+            <div class="comparison-item">
+              <span class="comp-badge mobile-badge">Mobile First ✅</span>
+              <div class="code-block">
+<pre>/* CSS default: untuk mobile */
+.grid { display: block; }
+
+/* Tambah untuk tablet ke atas */
+@media (min-width: 768px) {
+  .grid { display: grid; grid-template-columns: 1fr 1fr; }
+}
+
+/* Tambah untuk desktop */
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}</pre>
+              </div>
+              <p class="note">Direkomendasikan — mulai dari simple, tambah kompleksitas</p>
+            </div>
+            <div class="comparison-item">
+              <span class="comp-badge desktop-badge">Desktop First ❌</span>
+              <div class="code-block">
+<pre>/* CSS default: untuk desktop */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+
+/* Kurangi untuk tablet */
+@media (max-width: 1023px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Kurangi lagi untuk mobile */
+@media (max-width: 767px) {
+  .grid { display: block; }
+}</pre>
+              </div>
+              <p class="note">Tidak direkomendasikan — lebih berat, lebih sulit di-maintain</p>
+            </div>
+          </div>
+
+          <!-- Demo visual ukuran layar -->
+          <div class="screen-demo">
+            <h3>Resize browser untuk melihat perubahan:</h3>
+            <div class="screen-indicator">
+              <span class="si-mobile">📲 Mobile (&lt; 768px)</span>
+              <span class="si-tablet">📱 Tablet (768–1023px)</span>
+              <span class="si-desktop">🖥️ Desktop (≥ 1024px)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+        SECTION 2: BREAKPOINT
+      ════════════════════════════════════════════ -->
+      <section id="breakpoint" class="section">
+        <h2>2. Breakpoint — Titik Perubahan Layout</h2>
+
+        <div class="card">
+          <p>
+            Breakpoint adalah nilai lebar layar di mana layout berubah.
+            Tidak ada aturan baku — tapi ini yang paling umum dipakai:
+          </p>
+
+          <div class="breakpoint-table">
+            <div class="bp-item">
+              <div class="bp-bar" style="width: 25%;">
+                <span>320px</span>
+              </div>
+              <div class="bp-info">
+                <strong>Mobile kecil</strong>
+                <span>iPhone SE, Android lama</span>
+              </div>
+            </div>
+            <div class="bp-item">
+              <div class="bp-bar" style="width: 40%;">
+                <span>480px</span>
+              </div>
+              <div class="bp-info">
+                <strong>Mobile besar</strong>
+                <span>iPhone Plus, Android besar</span>
+              </div>
+            </div>
+            <div class="bp-item">
+              <div class="bp-bar" style="width: 55%;">
+                <span>768px</span>
+              </div>
+              <div class="bp-info">
+                <strong>Tablet portrait</strong>
+                <span>iPad, tablet Android</span>
+              </div>
+            </div>
+            <div class="bp-item">
+              <div class="bp-bar" style="width: 70%;">
+                <span>1024px</span>
+              </div>
+              <div class="bp-info">
+                <strong>Tablet landscape / Laptop kecil</strong>
+                <span>iPad landscape, laptop 13"</span>
+              </div>
+            </div>
+            <div class="bp-item">
+              <div class="bp-bar" style="width: 85%;">
+                <span>1280px</span>
+              </div>
+              <div class="bp-info">
+                <strong>Desktop</strong>
+                <span>Monitor standar, laptop 15"</span>
+              </div>
+            </div>
+            <div class="bp-item">
+              <div class="bp-bar" style="width: 100%;">
+                <span>1536px+</span>
+              </div>
+              <div class="bp-info">
+                <strong>Desktop besar / 4K</strong>
+                <span>Monitor 27"+, layar 4K</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <strong>💡 Tips:</strong> Jangan terpaku pada breakpoint tertentu.
+            Lebih baik <strong>tambahkan breakpoint saat layout terlihat rusak</strong>
+            — bukan berdasarkan ukuran device spesifik.
+            Resize browser sambil lihat hasilnya.
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+        SECTION 3: FLUID TYPOGRAPHY & SPACING
+      ════════════════════════════════════════════ -->
+      <section id="fluid" class="section">
+        <h2>3. Fluid Typography & Spacing</h2>
+
+        <div class="card">
+          <p>
+            Daripada mendefinisikan ukuran font berbeda di setiap breakpoint,
+            kita bisa pakai fungsi <code>clamp()</code> untuk ukuran yang
+            otomatis menyesuaikan secara mulus.
+          </p>
+
+          <h3>clamp(min, ideal, max)</h3>
+          <div class="code-block">
+<pre>/* font-size: minimal 1rem, ideal 4% lebar viewport, maksimal 2.5rem */
+h1 { font-size: clamp(1.5rem, 4vw, 2.5rem); }
+
+/* Tanpa clamp — harus tulis media query */
+h1 { font-size: 2.5rem; }
+@media (max-width: 768px) { h1 { font-size: 1.8rem; } }
+@media (max-width: 480px) { h1 { font-size: 1.5rem; } }
+
+/* Satuan viewport: */
+/* vw = % dari lebar viewport */
+/* vh = % dari tinggi viewport */
+/* 1vw = 1% lebar layar */</pre>
+          </div>
+
+          <div class="fluid-demo">
+            <p class="fluid-h1">Judul Fluid (clamp)</p>
+            <p class="fluid-h2">Sub Judul Fluid</p>
+            <p class="fluid-body">Teks biasa yang ukurannya juga menyesuaikan secara mulus dengan lebar layar.</p>
+          </div>
+
+          <h3 style="margin-top: 1.5rem;">Satuan Relatif untuk Spacing</h3>
+          <div class="code-block">
+<pre>/* Pakai rem untuk spacing yang konsisten */
+.section  { padding: 3rem 0; }       /* 48px di base 16px */
+.card     { padding: 1.5rem; }       /* 24px */
+.gap      { gap: 1rem; }             /* 16px */
+
+/* Pakai % untuk lebar yang fleksibel */
+.container { max-width: 1100px; width: 90%; margin: 0 auto; }
+/* width: 90% → selalu ada 5% ruang di kiri-kanan */</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+        SECTION 4: GAMBAR RESPONSIF
+      ════════════════════════════════════════════ -->
+      <section id="gambar" class="section">
+        <h2>4. Gambar Responsif</h2>
+
+        <div class="card">
+
+          <h3>CSS Dasar</h3>
+          <div class="code-block">
+<pre>/* Gambar tidak melebihi lebar container */
+img {
+  max-width: 100%;
+  height: auto;    /* pertahankan aspect ratio */
+  display: block;  /* hilangkan gap bawah */
+}
+
+/* Gambar mengisi container dengan aspect ratio terjaga */
+.img-cover {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;   /* crop ke tengah */
+  /* object-fit: contain → fit tanpa crop */
+  /* object-fit: fill   → stretch (distorsi) */
+}</pre>
+          </div>
+
+          <div class="img-demo-grid">
+            <div class="img-demo-item">
+              <div class="img-placeholder" style="object-fit: cover; background: linear-gradient(135deg, #2563eb, #7c3aed);">
+                <span>cover</span>
+              </div>
+              <p class="note">object-fit: cover — crop ke tengah</p>
+            </div>
+            <div class="img-demo-item">
+              <div class="img-placeholder" style="background: linear-gradient(135deg, #16a34a, #2563eb);">
+                <span>contain</span>
+              </div>
+              <p class="note">object-fit: contain — fit tanpa crop</p>
+            </div>
+            <div class="img-demo-item">
+              <div class="img-placeholder" style="background: linear-gradient(135deg, #ea580c, #dc2626);">
+                <span>fill</span>
+              </div>
+              <p class="note">object-fit: fill — stretch (hindari)</p>
+            </div>
+          </div>
+
+          <h3 style="margin-top: 1.5rem;">Gambar Berbeda per Ukuran Layar — &lt;picture&gt;</h3>
+          <div class="code-block">
+<pre>&lt;picture&gt;
+  &lt;source media="(min-width: 1024px)" srcset="gambar-desktop.jpg"&gt;
+  &lt;source media="(min-width: 768px)"  srcset="gambar-tablet.jpg"&gt;
+  &lt;img src="gambar-mobile.jpg" alt="Deskripsi gambar"&gt;
+&lt;/picture&gt;
+
+&lt;!-- Browser pilih source yang sesuai, fallback ke &lt;img&gt; --&gt;</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════
+        SECTION 5: CONTOH HALAMAN RESPONSIF
+      ════════════════════════════════════════════ -->
+      <section id="contoh" class="section">
+        <h2>5. Contoh Halaman Responsif Lengkap</h2>
+
+        <div class="card">
+          <p>
+            Ini adalah contoh section yang benar-benar responsif.
+            Resize browser untuk melihat bagaimana layout berubah di setiap breakpoint.
+          </p>
+
+          <!-- Card Grid Responsif -->
+          <h3>Card Grid — Mobile: 1 kolom, Tablet: 2 kolom, Desktop: 3 kolom</h3>
+          <div class="responsive-grid">
+            <article class="r-card">
+              <div class="r-card-header">🌐 HTML & CSS</div>
+              <div class="r-card-body">
+                <p>Fondasi web. Struktur dan tampilan — belajar semantic HTML dan CSS modern.</p>
+                <div class="r-card-tags">
+                  <span class="tag">HTML5</span>
+                  <span class="tag">CSS3</span>
+                  <span class="tag">Flexbox</span>
+                </div>
+              </div>
+              <div class="r-card-footer">
+                <span class="level level-beginner">Pemula</span>
+                <a href="#" class="r-link">Pelajari →</a>
+              </div>
+            </article>
+
+            <article class="r-card">
+              <div class="r-card-header">⚡ JavaScript</div>
+              <div class="r-card-body">
+                <p>Bahasa pemrograman web. Dari dasar ES6+ hingga DOM manipulation.</p>
+                <div class="r-card-tags">
+                  <span class="tag">ES6+</span>
+                  <span class="tag">DOM</span>
+                  <span class="tag">Async</span>
+                </div>
+              </div>
+              <div class="r-card-footer">
+                <span class="level level-mid">Menengah</span>
+                <a href="#" class="r-link">Pelajari →</a>
+              </div>
+            </article>
+
+            <article class="r-card">
+              <div class="r-card-header">🐘 SQL</div>
+              <div class="r-card-body">
+                <p>Database relasional. Query, JOIN, normalisasi, stored procedure.</p>
+                <div class="r-card-tags">
+                  <span class="tag">MySQL</span>
+                  <span class="tag">Query</span>
+                  <span class="tag">JOIN</span>
+                </div>
+              </div>
+              <div class="r-card-footer">
+                <span class="level level-beginner">Pemula</span>
+                <a href="#" class="r-link">Pelajari →</a>
+              </div>
+            </article>
+
+            <article class="r-card">
+              <div class="r-card-header">⚙️ PHP</div>
+              <div class="r-card-body">
+                <p>Backend web. OOP, PDO, REST API, integrasi dengan database.</p>
+                <div class="r-card-tags">
+                  <span class="tag">OOP</span>
+                  <span class="tag">PDO</span>
+                  <span class="tag">API</span>
+                </div>
+              </div>
+              <div class="r-card-footer">
+                <span class="level level-mid">Menengah</span>
+                <a href="#" class="r-link">Pelajari →</a>
+              </div>
+            </article>
+
+            <article class="r-card">
+              <div class="r-card-header">🎨 CSS Grid</div>
+              <div class="r-card-body">
+                <p>Layout 2 dimensi. Template areas, auto-fit, minmax — layout modern.</p>
+                <div class="r-card-tags">
+                  <span class="tag">Grid</span>
+                  <span class="tag">Areas</span>
+                  <span class="tag">auto-fit</span>
+                </div>
+              </div>
+              <div class="r-card-footer">
+                <span class="level level-beginner">Pemula</span>
+                <a href="#" class="r-link">Pelajari →</a>
+              </div>
+            </article>
+
+            <article class="r-card">
+              <div class="r-card-header">📱 Responsive</div>
+              <div class="r-card-body">
+                <p>Mobile-first, media query, fluid typography, gambar responsif.</p>
+                <div class="r-card-tags">
+                  <span class="tag">Mobile</span>
+                  <span class="tag">@media</span>
+                  <span class="tag">clamp()</span>
+                </div>
+              </div>
+              <div class="r-card-footer">
+                <span class="level level-mid">Menengah</span>
+                <a href="#" class="r-link">Pelajari →</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- Tabel Responsif -->
+          <h3 style="margin-top: 2rem;">Tabel Responsif</h3>
+          <p class="note">Di mobile, tabel bisa di-scroll horizontal.</p>
+          <div class="table-wrapper">
+            <table class="responsive-table">
+              <thead>
+                <tr>
+                  <th>Topik</th>
+                  <th>Folder</th>
+                  <th>Status</th>
+                  <th>Database</th>
+                  <th>File</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>HTML Dasar</td>
+                  <td><code>web/01-html-dasar</code></td>
+                  <td><span class="status done">✅ Selesai</span></td>
+                  <td>—</td>
+                  <td>index.html, style.css</td>
+                </tr>
+                <tr>
+                  <td>CSS Dasar</td>
+                  <td><code>web/02-css-dasar</code></td>
+                  <td><span class="status done">✅ Selesai</span></td>
+                  <td>—</td>
+                  <td>index.html, style.css</td>
+                </tr>
+                <tr>
+                  <td>Flexbox</td>
+                  <td><code>web/03-flexbox</code></td>
+                  <td><span class="status done">✅ Selesai</span></td>
+                  <td>—</td>
+                  <td>index.html, style.css</td>
+                </tr>
+                <tr>
+                  <td>CSS Grid</td>
+                  <td><code>web/04-grid</code></td>
+                  <td><span class="status done">✅ Selesai</span></td>
+                  <td>—</td>
+                  <td>index.html, style.css</td>
+                </tr>
+                <tr>
+                  <td>Responsive</td>
+                  <td><code>web/05-responsive</code></td>
+                  <td><span class="status done">✅ Selesai</span></td>
+                  <td>—</td>
+                  <td>index.html, style.css</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- end .container -->
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <p class="footer-logo">🌐 Dev Journey</p>
+          <p>Dokumentasi perjalanan belajar web development — dari SMK RPL 2018 hingga S1 Informatika 2025.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Web</h4>
+          <ul>
+            <li><a href="../01-html-dasar/">01 — HTML Dasar</a></li>
+            <li><a href="../02-css-dasar/">02 — CSS Dasar</a></li>
+            <li><a href="../03-flexbox/">03 — Flexbox</a></li>
+            <li><a href="../04-grid/">04 — Grid</a></li>
+            <li><a href="#">05 — Responsive</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Link</h4>
+          <ul>
+            <li><a href="https://github.com/Levi50421905/dev-journey" target="_blank" rel="noopener noreferrer">dev-journey</a></li>
+            <li><a href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer">MDN Web Docs</a></li>
+            <li><a href="https://css-tricks.com" target="_blank" rel="noopener noreferrer">CSS Tricks</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Muhammad Alfarezzi Fallevi &nbsp;&middot;&nbsp; 4IA17 &nbsp;&middot;&nbsp; 50421905</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Hamburger menu toggle
+    const btn = document.getElementById('hamburgerBtn');
+    const nav = document.getElementById('mainNav');
+    btn.addEventListener('click', () => {
+      nav.classList.toggle('open');
+      btn.classList.toggle('active');
+    });
+  </script>
+
+</body>
+</html>

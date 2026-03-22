@@ -1,0 +1,455 @@
+/*
+  ╔══════════════════════════════════════════════════════╗
+  ║  File   : style.css                                 ║
+  ║  Topik  : Flexbox — Layout 1 Dimensi                ║
+  ║  Folder : web/03-flexbox/                           ║
+  ║  Author : Muhammad Alfarezzi Fallevi (50421905)     ║
+  ╚══════════════════════════════════════════════════════╝
+*/
+
+:root {
+  --biru:       #2563eb;
+  --biru-gelap: #1e40af;
+  --biru-muda:  #dbeafe;
+  --biru-bg:    #eff6ff;
+  --hijau:      #16a34a;
+  --hijau-bg:   #dcfce7;
+  --orange:     #ea580c;
+  --orange-bg:  #ffedd5;
+  --ungu:       #7c3aed;
+  --ungu-bg:    #ede9fe;
+  --teks:       #111827;
+  --teks-abu:   #6b7280;
+  --bg:         #f8fafc;
+  --putih:      #ffffff;
+  --border:     #e5e7eb;
+  --font:       'Segoe UI', system-ui, sans-serif;
+  --font-mono:  'Courier New', monospace;
+  --radius:     10px;
+  --radius-sm:  6px;
+  --shadow:     0 1px 6px rgba(0,0,0,0.08);
+  --transisi:   0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--teks);
+  background: var(--bg);
+}
+
+h1, h2, h3, h4 { font-weight: 700; line-height: 1.3; color: var(--teks); }
+h1 { font-size: clamp(1.8rem, 4vw, 2.4rem); }
+h2 { font-size: 1.45rem; margin-bottom: 1.25rem; }
+h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
+h4 { font-size: 1rem; margin-bottom: 0.4rem; }
+p  { margin-bottom: 1rem; }
+p:last-child { margin-bottom: 0; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: #f1f5f9;
+  color: #e11d48;
+  padding: 0.15em 0.45em;
+  border-radius: 4px;
+}
+
+a { color: var(--biru); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ════════════ HEADER ════════════ */
+header {
+  background: var(--biru);
+  color: white;
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo { font-weight: 700; font-size: 1.1rem; color: white; }
+
+nav ul { list-style: none; display: flex; gap: 0.25rem; }
+nav a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 500;
+  transition: background var(--transisi);
+}
+nav a:hover { background: rgba(255,255,255,0.15); color: white; text-decoration: none; }
+
+/* ════════════ MAIN LAYOUT ════════════ */
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--biru) 0%, var(--biru-gelap) 100%);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: var(--radius);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+.hero h1 { color: white; margin-bottom: 0.75rem; }
+.hero p { opacity: 0.9; font-size: 1.05rem; }
+
+.section { margin-bottom: 3rem; }
+.section > h2 {
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 1.5rem;
+  color: var(--biru-gelap);
+}
+
+.card {
+  background: var(--putih);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow);
+}
+
+.note { font-size: 0.85rem; color: var(--teks-abu); margin-top: 0.4rem; }
+
+.tip-box {
+  background: #fefce8;
+  border: 1px solid #fde047;
+  border-radius: var(--radius-sm);
+  padding: 0.875rem 1rem;
+  margin-top: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.8;
+}
+
+/* ════════════ FLEX ITEM (KOTAK DEMO) ════════════ */
+.box {
+  background: var(--biru);
+  color: white;
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+  min-width: 44px;
+}
+
+.box.tall-box { height: 80px; display: flex; align-items: center; justify-content: center; }
+.box.no-h     { /* biarkan stretch mengisi tinggi */ }
+.box.w80      { width: 80px; }
+.box.box-orange { background: var(--orange); }
+.box.box-green  { background: var(--hijau); }
+.box.box-purple { background: var(--ungu); }
+
+/* ════════════ FLEX CONTAINERS (DEMO) ════════════ */
+
+/* Container tanpa flex */
+.demo-noflex {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem;
+  background: var(--bg);
+}
+.demo-noflex .box { margin-bottom: 4px; }
+.demo-noflex .box:last-child { margin-bottom: 0; }
+
+/* Container dengan flex */
+.demo-flex {
+  display: flex;
+  gap: 8px;
+  border: 2px dashed var(--biru);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem;
+  background: var(--biru-bg);
+}
+
+/* Flex container standar untuk semua demo */
+.flex-box {
+  display: flex;
+  gap: 8px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.6rem;
+  background: var(--bg);
+  width: 100%;
+}
+
+.flex-box.tall { height: 130px; align-items: flex-start; }
+
+/* ════════════ LAYOUT GRID DEMO ════════════ */
+.konsep-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin: 1.25rem 0;
+}
+
+.demo-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.demo-item { display: flex; flex-direction: column; gap: 0.4rem; }
+.demo-label { font-size: 0.88rem; font-weight: 600; color: var(--teks); margin-bottom: 0.25rem; }
+.justify-demos { display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem; }
+.jc-item { display: flex; flex-direction: column; gap: 0.3rem; }
+
+/* ════════════ AXIS DIAGRAM ════════════ */
+.axis-diagram {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.axis-box {
+  position: relative;
+  background: var(--biru-bg);
+  border: 2px solid var(--biru-muda);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  margin: 0.75rem 0;
+}
+
+.main-axis {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--biru-gelap);
+  font-weight: 600;
+  font-size: 0.88rem;
+  margin-bottom: 0.5rem;
+}
+
+.cross-axis {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  color: var(--orange);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.axis-items {
+  display: flex;
+  gap: 8px;
+}
+
+.axis-note { font-size: 0.78rem; font-weight: 400; color: var(--teks-abu); }
+
+/* ════════════ USE CASE 1: NAVBAR ════════════ */
+.demo-navbar {
+  display: flex;
+  justify-content: space-between; /* ← logo kiri, menu kanan */
+  align-items: center;             /* ← vertikal center */
+  background: #1e293b;
+  padding: 0.875rem 1.5rem;
+  border-radius: var(--radius-sm);
+  margin-top: 1rem;
+}
+
+.nav-logo {
+  color: white;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+.nav-menu {
+  display: flex;        /* ← menu items berjajar */
+  list-style: none;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-menu a {
+  color: #cbd5e1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 4px;
+  transition: color var(--transisi);
+}
+.nav-menu a:hover { color: white; text-decoration: none; }
+
+.nav-btn {
+  background: var(--biru) !important;
+  color: white !important;
+  padding: 0.35rem 1rem !important;
+  border-radius: var(--radius-sm) !important;
+}
+
+/* ════════════ USE CASE 2: CARD GRID ════════════ */
+.demo-cards {
+  display: flex;
+  flex-wrap: wrap;    /* ← pindah baris kalau tidak muat */
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.demo-card {
+  flex: 1 1 180px;
+  /*
+    flex: grow shrink basis
+    1 1 180px = bisa tumbuh, bisa susut, minimal 180px
+    → Kalau cukup lebar: 4 kartu sejajar
+    → Kalau sempit: 2 kartu, atau 1 kartu
+  */
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.card-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.demo-card h4 { font-size: 0.95rem; color: var(--teks); margin-bottom: 0.25rem; }
+.demo-card p  { font-size: 0.82rem; color: var(--teks-abu); margin: 0; }
+
+/* ════════════ USE CASE 3: PERFECT CENTERING ════════════ */
+.demo-center {
+  display: flex;
+  justify-content: center; /* ← horizontal center */
+  align-items: center;     /* ← vertical center */
+  height: 180px;
+  background: var(--biru-bg);
+  border: 2px dashed var(--biru-muda);
+  border-radius: var(--radius-sm);
+  margin-top: 1rem;
+}
+
+.center-box {
+  background: var(--biru);
+  color: white;
+  padding: 1rem 2rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+
+/* ════════════ USE CASE 4: SIDEBAR LAYOUT ════════════ */
+.demo-sidebar-layout {
+  display: flex;     /* ← aktifkan flexbox */
+  gap: 1rem;
+  margin-top: 1rem;
+  height: 120px;
+}
+
+.demo-sidebar {
+  flex: 0 0 180px;   /* ← tidak tumbuh, tidak susut, lebar tetap 180px */
+  background: var(--biru-bg);
+  border: 2px dashed var(--biru-muda);
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--biru-gelap);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.demo-main-content {
+  flex: 1;           /* ← ambil semua ruang yang tersisa */
+  background: var(--hijau-bg);
+  border: 2px dashed #bbf7d0;
+  border-radius: var(--radius-sm);
+  padding: 1rem;
+  font-size: 0.85rem;
+  color: var(--hijau);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+/* ════════════ USE CASE 5: STICKY FOOTER ════════════ */
+.demo-sticky-footer {
+  display: flex;
+  flex-direction: column; /* ← susun vertikal */
+  height: 180px;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.sf-header {
+  background: var(--biru);
+  color: white;
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+.sf-main {
+  flex: 1;           /* ← ambil semua ruang tersisa → dorong footer ke bawah */
+  background: var(--bg);
+  padding: 1rem;
+  color: var(--teks-abu);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sf-footer {
+  background: #1e293b;
+  color: rgba(255,255,255,0.8);
+  padding: 0.75rem 1rem;
+  text-align: center;
+}
+
+/* ════════════ FOOTER ════════════ */
+footer {
+  background: var(--teks);
+  color: rgba(255,255,255,0.75);
+  padding: 2rem;
+  margin-top: 3rem;
+  text-align: center;
+  font-size: 0.9rem;
+}
+footer p { margin-bottom: 0.3rem; }
+footer p:last-child { margin-bottom: 0; }
+footer strong { color: white; }
+footer a { color: #93c5fd; }
+
+/* ════════════ RESPONSIVE ════════════ */
+@media (max-width: 768px) {
+  header { padding: 0 1rem; }
+  .header-inner { height: auto; flex-direction: column; padding: 0.75rem 0; gap: 0.5rem; }
+  nav ul { flex-wrap: wrap; justify-content: center; gap: 0; }
+  nav a { font-size: 0.8rem; padding: 0.3rem 0.5rem; }
+  main { padding: 1.25rem 1rem; }
+  .hero { padding: 2rem 1.25rem; }
+
+  .konsep-grid,
+  .demo-grid-2 { grid-template-columns: 1fr; }
+
+  .demo-sidebar-layout { flex-direction: column; height: auto; }
+  .demo-sidebar { flex: none; }
+
+  .nav-menu { gap: 0.25rem; }
+}

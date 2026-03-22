@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════╗
+  ║  File   : index.html                                ║
+  ║  Topik  : Flexbox — Layout 1 Dimensi                ║
+  ║  Folder : web/03-flexbox/                           ║
+  ║  Author : Muhammad Alfarezzi Fallevi (50421905)     ║
+  ║  Repo   : github.com/Levi50421905/dev-journey       ║
+  ╚══════════════════════════════════════════════════════╝
+
+  Flexbox = Flexible Box Layout
+  → Sistem layout CSS untuk mengatur elemen dalam 1 dimensi
+    (baris ATAU kolom — bukan keduanya sekaligus)
+  → Sebelum Flexbox: layout horizontal pakai float, inline-block,
+    atau table — semua punya quirks yang menyebalkan
+  → Flexbox menyelesaikan ini dengan cara yang elegan dan intuitif
+-->
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>03 — Flexbox</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <span class="logo">🧩 Flexbox</span>
+      <nav>
+        <ul>
+          <li><a href="#konsep">Konsep</a></li>
+          <li><a href="#direction">Direction</a></li>
+          <li><a href="#justify">Justify</a></li>
+          <li><a href="#align">Align</a></li>
+          <li><a href="#item">Item</a></li>
+          <li><a href="#usecase">Use Case</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>CSS Flexbox</h1>
+      <p>Layout 1 dimensi — atur elemen dalam baris atau kolom dengan mudah</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 1: KONSEP DASAR
+    ════════════════════════════════════════════ -->
+    <section id="konsep" class="section">
+      <h2>1. Konsep Dasar — Container & Items</h2>
+
+      <div class="card">
+        <p>
+          Flexbox bekerja dengan dua peran utama:
+          <strong>flex container</strong> (parent) dan
+          <strong>flex items</strong> (semua anak langsung container).
+        </p>
+
+        <div class="konsep-grid">
+          <div>
+            <h3>Tanpa <code>display: flex</code></h3>
+            <p class="note">Elemen block — masing-masing ambil 1 baris penuh</p>
+            <div class="demo-noflex">
+              <div class="box">1</div>
+              <div class="box">2</div>
+              <div class="box">3</div>
+            </div>
+          </div>
+          <div>
+            <h3>Dengan <code>display: flex</code></h3>
+            <p class="note">Semua item otomatis berjajar horizontal</p>
+            <div class="demo-flex">
+              <div class="box">1</div>
+              <div class="box">2</div>
+              <div class="box">3</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="axis-diagram">
+          <h3>Dua Sumbu Flexbox</h3>
+          <div class="axis-box">
+            <div class="main-axis">
+              <span>Main Axis →</span>
+              <span class="axis-note">(justify-content)</span>
+            </div>
+            <div class="cross-axis">
+              <span>Cross Axis ↓</span>
+              <span class="axis-note">(align-items)</span>
+            </div>
+            <div class="axis-items">
+              <div class="box">A</div>
+              <div class="box">B</div>
+              <div class="box">C</div>
+            </div>
+          </div>
+          <p class="note">
+            Kalau <code>flex-direction: row</code> → main axis = horizontal, cross axis = vertikal<br>
+            Kalau <code>flex-direction: column</code> → main axis = vertikal, cross axis = horizontal
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 2: FLEX-DIRECTION
+    ════════════════════════════════════════════ -->
+    <section id="direction" class="section">
+      <h2>2. flex-direction — Arah Susunan</h2>
+
+      <div class="card">
+        <p>Menentukan arah main axis — ke mana item-item disusun.</p>
+
+        <div class="demo-grid-2">
+          <div class="demo-item">
+            <p class="demo-label"><code>row</code> (default)</p>
+            <div class="flex-box" style="flex-direction: row;">
+              <div class="box">A</div>
+              <div class="box">B</div>
+              <div class="box">C</div>
+            </div>
+            <p class="note">Kiri ke kanan</p>
+          </div>
+          <div class="demo-item">
+            <p class="demo-label"><code>row-reverse</code></p>
+            <div class="flex-box" style="flex-direction: row-reverse;">
+              <div class="box">A</div>
+              <div class="box">B</div>
+              <div class="box">C</div>
+            </div>
+            <p class="note">Kanan ke kiri</p>
+          </div>
+          <div class="demo-item">
+            <p class="demo-label"><code>column</code></p>
+            <div class="flex-box" style="flex-direction: column; height: 160px;">
+              <div class="box">A</div>
+              <div class="box">B</div>
+              <div class="box">C</div>
+            </div>
+            <p class="note">Atas ke bawah</p>
+          </div>
+          <div class="demo-item">
+            <p class="demo-label"><code>column-reverse</code></p>
+            <div class="flex-box" style="flex-direction: column-reverse; height: 160px;">
+              <div class="box">A</div>
+              <div class="box">B</div>
+              <div class="box">C</div>
+            </div>
+            <p class="note">Bawah ke atas</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 3: JUSTIFY-CONTENT
+    ════════════════════════════════════════════ -->
+    <section id="justify" class="section">
+      <h2>3. justify-content — Distribusi di Main Axis</h2>
+
+      <div class="card">
+        <p>
+          Mengatur bagaimana item didistribusikan di sepanjang
+          <strong>main axis</strong> (horizontal kalau <code>flex-direction: row</code>).
+        </p>
+
+        <div class="justify-demos">
+          <div class="jc-item">
+            <p class="demo-label"><code>flex-start</code> (default)</p>
+            <div class="flex-box" style="justify-content: flex-start;">
+              <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+            </div>
+            <p class="note">Item menumpuk di awal</p>
+          </div>
+          <div class="jc-item">
+            <p class="demo-label"><code>flex-end</code></p>
+            <div class="flex-box" style="justify-content: flex-end;">
+              <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+            </div>
+            <p class="note">Item menumpuk di akhir</p>
+          </div>
+          <div class="jc-item">
+            <p class="demo-label"><code>center</code></p>
+            <div class="flex-box" style="justify-content: center;">
+              <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+            </div>
+            <p class="note">Item di tengah</p>
+          </div>
+          <div class="jc-item">
+            <p class="demo-label"><code>space-between</code></p>
+            <div class="flex-box" style="justify-content: space-between;">
+              <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+            </div>
+            <p class="note">Item pertama & terakhir di tepi, ruang sama di tengah</p>
+          </div>
+          <div class="jc-item">
+            <p class="demo-label"><code>space-around</code></p>
+            <div class="flex-box" style="justify-content: space-around;">
+              <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+            </div>
+            <p class="note">Ruang sama di kiri-kanan setiap item</p>
+          </div>
+          <div class="jc-item">
+            <p class="demo-label"><code>space-evenly</code></p>
+            <div class="flex-box" style="justify-content: space-evenly;">
+              <div class="box">1</div><div class="box">2</div><div class="box">3</div>
+            </div>
+            <p class="note">Ruang sama persis di antara semua (termasuk tepi)</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 4: ALIGN-ITEMS
+    ════════════════════════════════════════════ -->
+    <section id="align" class="section">
+      <h2>4. align-items — Posisi di Cross Axis</h2>
+
+      <div class="card">
+        <p>
+          Mengatur posisi item di <strong>cross axis</strong>
+          (vertikal kalau <code>flex-direction: row</code>).
+          Perlu <code>height</code> pada container agar efeknya terlihat.
+        </p>
+
+        <div class="demo-grid-2">
+          <div class="demo-item">
+            <p class="demo-label"><code>flex-start</code></p>
+            <div class="flex-box tall" style="align-items: flex-start;">
+              <div class="box">1</div>
+              <div class="box tall-box">2</div>
+              <div class="box">3</div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <p class="demo-label"><code>flex-end</code></p>
+            <div class="flex-box tall" style="align-items: flex-end;">
+              <div class="box">1</div>
+              <div class="box tall-box">2</div>
+              <div class="box">3</div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <p class="demo-label"><code>center</code></p>
+            <div class="flex-box tall" style="align-items: center;">
+              <div class="box">1</div>
+              <div class="box tall-box">2</div>
+              <div class="box">3</div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <p class="demo-label"><code>stretch</code> (default)</p>
+            <div class="flex-box tall" style="align-items: stretch;">
+              <div class="box no-h">1</div>
+              <div class="box no-h">2</div>
+              <div class="box no-h">3</div>
+            </div>
+            <p class="note">Item mengisi tinggi container</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 5: PROPERTI ITEM
+    ════════════════════════════════════════════ -->
+    <section id="item" class="section">
+      <h2>5. Properti Flex Item</h2>
+
+      <div class="card">
+
+        <!-- flex-grow -->
+        <h3>flex-grow — Ambil Ruang Sisa</h3>
+        <p>Menentukan berapa bagian ruang sisa yang diambil item ini.</p>
+
+        <div class="demo-item" style="margin-bottom: 1rem;">
+          <p class="demo-label">Semua <code>flex-grow: 1</code> → lebar sama rata</p>
+          <div class="flex-box">
+            <div class="box" style="flex-grow: 1;">grow:1</div>
+            <div class="box" style="flex-grow: 1;">grow:1</div>
+            <div class="box" style="flex-grow: 1;">grow:1</div>
+          </div>
+        </div>
+
+        <div class="demo-item" style="margin-bottom: 1.5rem;">
+          <p class="demo-label">Tengah <code>flex-grow: 2</code> → dapat 2× ruang sisa</p>
+          <div class="flex-box">
+            <div class="box" style="flex-grow: 1;">grow:1</div>
+            <div class="box box-orange" style="flex-grow: 2;">grow:2</div>
+            <div class="box" style="flex-grow: 1;">grow:1</div>
+          </div>
+        </div>
+
+        <!-- flex-shrink -->
+        <h3>flex-shrink — Menyusut Saat Sempit</h3>
+        <p>Menentukan seberapa besar item menyusut saat ruang tidak cukup.</p>
+
+        <div class="demo-item" style="margin-bottom: 1.5rem;">
+          <p class="demo-label"><code>flex-shrink: 0</code> → tidak menyusut (ukuran tetap)</p>
+          <div class="flex-box">
+            <div class="box" style="flex-shrink: 1; width: 200px;">shrink:1</div>
+            <div class="box box-green" style="flex-shrink: 0; width: 200px;">shrink:0 (tetap)</div>
+            <div class="box" style="flex-shrink: 1; width: 200px;">shrink:1</div>
+          </div>
+        </div>
+
+        <!-- flex shorthand -->
+        <h3><code>flex</code> — Shorthand</h3>
+        <p>
+          <code>flex: grow shrink basis</code> — menggabungkan ketiga properti.<br>
+          Yang paling sering dipakai: <code>flex: 1</code>
+          (= grow:1, shrink:1, basis:0 → semua item lebar sama rata).
+        </p>
+
+        <div class="tip-box">
+          <strong>💡 Pola paling umum:</strong><br>
+          <code>flex: 1</code> → semua item berbagi ruang sama rata<br>
+          <code>flex: 0 0 200px</code> → ukuran tetap 200px, tidak tumbuh, tidak menyusut<br>
+          <code>flex: 1 1 200px</code> → minimal 200px, bisa tumbuh dan menyusut
+        </div>
+
+        <!-- align-self -->
+        <h3 style="margin-top: 1.5rem;">align-self — Override align-items per Item</h3>
+        <p>Override <code>align-items</code> hanya untuk satu item tertentu.</p>
+
+        <div class="demo-item">
+          <div class="flex-box tall" style="align-items: flex-start;">
+            <div class="box" style="align-self: flex-start;">start</div>
+            <div class="box box-orange" style="align-self: center;">center</div>
+            <div class="box box-green" style="align-self: flex-end;">end</div>
+            <div class="box box-purple" style="align-self: stretch;">stretch</div>
+          </div>
+        </div>
+
+        <!-- flex-wrap -->
+        <h3 style="margin-top: 1.5rem;">flex-wrap — Boleh Pindah Baris?</h3>
+        <div class="demo-grid-2" style="margin-top: 0.75rem;">
+          <div class="demo-item">
+            <p class="demo-label"><code>nowrap</code> (default) — item dipaksa 1 baris</p>
+            <div class="flex-box" style="flex-wrap: nowrap; overflow: hidden;">
+              <div class="box w80">1</div><div class="box w80">2</div>
+              <div class="box w80">3</div><div class="box w80">4</div>
+              <div class="box w80">5</div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <p class="demo-label"><code>wrap</code> — item pindah baris jika tidak muat</p>
+            <div class="flex-box" style="flex-wrap: wrap;">
+              <div class="box w80">1</div><div class="box w80">2</div>
+              <div class="box w80">3</div><div class="box w80">4</div>
+              <div class="box w80">5</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- gap -->
+        <h3 style="margin-top: 1.5rem;">gap — Jarak Antar Item</h3>
+        <p>Lebih bersih dari margin karena tidak menambah ruang di tepi luar.</p>
+        <div class="demo-grid-2" style="margin-top: 0.75rem;">
+          <div class="demo-item">
+            <p class="demo-label">Tanpa gap</p>
+            <div class="flex-box" style="gap: 0;">
+              <div class="box">A</div><div class="box">B</div><div class="box">C</div>
+            </div>
+          </div>
+          <div class="demo-item">
+            <p class="demo-label"><code>gap: 12px</code></p>
+            <div class="flex-box" style="gap: 12px;">
+              <div class="box">A</div><div class="box">B</div><div class="box">C</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+      SECTION 6: USE CASE NYATA
+    ════════════════════════════════════════════ -->
+    <section id="usecase" class="section">
+      <h2>6. Use Case Nyata</h2>
+
+      <!-- Navbar -->
+      <div class="card">
+        <h3>6.1 Navbar — Logo Kiri, Menu Kanan</h3>
+        <p class="note">
+          Pola paling umum: <code>justify-content: space-between</code> +
+          <code>align-items: center</code>
+        </p>
+        <nav class="demo-navbar">
+          <div class="nav-logo">🌐 MyApp</div>
+          <ul class="nav-menu">
+            <li><a href="#">Beranda</a></li>
+            <li><a href="#">Tentang</a></li>
+            <li><a href="#">Kontak</a></li>
+            <li><a href="#" class="nav-btn">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Card Grid -->
+      <div class="card">
+        <h3>6.2 Card Grid Responsif</h3>
+        <p class="note">
+          <code>flex-wrap: wrap</code> + <code>flex: 1 1 220px</code> →
+          otomatis menyesuaikan jumlah kolom
+        </p>
+        <div class="demo-cards">
+          <div class="demo-card">
+            <div class="card-icon">💻</div>
+            <h4>Frontend</h4>
+            <p>HTML, CSS, JavaScript, React</p>
+          </div>
+          <div class="demo-card">
+            <div class="card-icon">⚙️</div>
+            <h4>Backend</h4>
+            <p>PHP, Node.js, Python, API</p>
+          </div>
+          <div class="demo-card">
+            <div class="card-icon">🐘</div>
+            <h4>Database</h4>
+            <p>MySQL, PostgreSQL, Redis</p>
+          </div>
+          <div class="demo-card">
+            <div class="card-icon">📱</div>
+            <h4>Mobile</h4>
+            <p>Flutter, React Native</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Perfect Centering -->
+      <div class="card">
+        <h3>6.3 Perfect Centering</h3>
+        <p class="note">
+          Cara termudah center elemen secara horizontal & vertikal:
+          <code>display: flex</code> + <code>justify-content: center</code> +
+          <code>align-items: center</code>
+        </p>
+        <div class="demo-center">
+          <div class="center-box">Saya tepat di tengah! 🎯</div>
+        </div>
+      </div>
+
+      <!-- Sidebar Layout -->
+      <div class="card">
+        <h3>6.4 Layout Sidebar + Konten</h3>
+        <p class="note">
+          Sidebar ukuran tetap (<code>flex: 0 0 200px</code>),
+          konten utama ambil sisa ruang (<code>flex: 1</code>)
+        </p>
+        <div class="demo-sidebar-layout">
+          <aside class="demo-sidebar">
+            <p><strong>Sidebar</strong></p>
+            <p><code>flex: 0 0 180px</code></p>
+            <p>Ukuran tetap</p>
+          </aside>
+          <main class="demo-main-content">
+            <p><strong>Konten Utama</strong></p>
+            <p><code>flex: 1</code></p>
+            <p>Mengambil semua ruang yang tersisa</p>
+          </main>
+        </div>
+      </div>
+
+      <!-- Sticky Footer -->
+      <div class="card">
+        <h3>6.5 Sticky Footer</h3>
+        <p class="note">
+          Footer selalu di bawah walau konten sedikit:
+          <code>body { display: flex; flex-direction: column; min-height: 100vh; }</code>
+          + <code>main { flex: 1; }</code>
+        </p>
+        <div class="demo-sticky-footer">
+          <div class="sf-header">Header</div>
+          <div class="sf-main">Main (flex: 1 → mendorong footer ke bawah)</div>
+          <div class="sf-footer">Footer — selalu di bawah</div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <p><strong>dev-journey</strong> &mdash; web/03-flexbox</p>
+      <p>&copy; 2025 Muhammad Alfarezzi Fallevi &nbsp;&middot;&nbsp;
+        <a href="https://github.com/Levi50421905" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
